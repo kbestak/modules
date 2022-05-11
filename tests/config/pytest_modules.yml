@@ -230,6 +230,10 @@ biobambam/bamsormadup:
   - modules/biobambam/bamsormadup/**
   - tests/modules/biobambam/bamsormadup/**
 
+bioinfotongli/bioformats2raw:
+  - modules/bioinfotongli/bioformats2raw/**
+  - tests/modules/bioinfotongli/bioformats2raw/**
+
 biscuit/align:
   - modules/biscuit/index/**
   - modules/biscuit/align/**
@@ -1643,13 +1647,13 @@ samtools/bam2fq:
   - modules/samtools/bam2fq/**
   - tests/modules/samtools/bam2fq/**
 
-samtools/convert:
-  - modules/samtools/convert/**
-  - tests/modules/samtools/convert/**
-
 samtools/collatefastq:
   - modules/samtools/collatefastq/**
   - tests/modules/samtools/collatefastq/**
+
+samtools/convert:
+  - modules/samtools/convert/**
+  - tests/modules/samtools/convert/**
 
 samtools/depth:
   - modules/samtools/depth/**
