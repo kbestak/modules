@@ -16,7 +16,7 @@
 //               list (`[]`) instead of a file can be used to work around this issue.
 
 process BIOINFOTONGLI_BIOFORMATS2RAW {
-    tag '$bam'
+    tag '$img'
     label 'process_medium'
 
     // TODO nf-core: List required Conda package(s).
@@ -35,20 +35,21 @@ process BIOINFOTONGLI_BIOFORMATS2RAW {
     //               https://github.com/nf-core/modules/blob/master/modules/bwa/index/main.nf
     // TODO nf-core: Where applicable please provide/convert compressed files as input/output
     //               e.g. "*.fastq.gz" and NOT "*.fastq", "*.bam" and NOT "*.sam" etc.
-    path bam
+    path img
 
     output:
     // TODO nf-core: Named file extensions MUST be emitted for ALL output channels
-    path "*.bam", emit: bam
+    path "{$stem}.zarr", emit: bam
     // TODO nf-core: List additional required output channels/values here
-    path "versions.yml"           , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
+    def stem = img.baseName
     def args = task.ext.args ?: ''
-    
+
     // TODO nf-core: Where possible, a command MUST be provided to obtain the version number of the software e.g. 1.10
     //               If the software is unable to output a version number on the command-line then it can be manually specified
     //               e.g. https://github.com/nf-core/modules/blob/master/modules/homer/annotatepeaks/main.nf
@@ -59,15 +60,14 @@ process BIOINFOTONGLI_BIOFORMATS2RAW {
     // TODO nf-core: Please replace the example samtools command below with your module's command
     // TODO nf-core: Please indent the command appropriately (4 spaces!!) to help with readability ;)
     """
-    samtools \\
-        sort \\
+    /opt/bioformats2raw/bin/bioformats2raw \\
         $args \\
-        -@ $task.cpus \\
-        $bam
+        $img
+        #-@ $task.cpus \\
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//' ))
+        bioinfotongli: \$(echo \$(bioformats2raw --version 2>&1) | sed 's/^.*bioformats2raw //; s/Using.*\$//' ))
     END_VERSIONS
     """
 }

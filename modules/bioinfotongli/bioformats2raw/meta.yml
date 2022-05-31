@@ -1,39 +1,33 @@
 name: "bioinfotongli_bioformats2raw"
-## TODO nf-core: Add a description of the module and list keywords
-description: write your description here
+description: Java application to convert image file formats, including .mrxs, to an intermediate Zarr structure.
 keywords:
-  - sort
+  - bioimage
+  - conversion
 tools:
   - "bioinfotongli":
-      ## TODO nf-core: Add a description and other details for the software below
-      description: ""
+      description: "Modules that are reusable for my daily bioimage analysis"
       homepage: ""
       documentation: ""
       tool_dev_url: ""
-      doi: ""
-      licence: ""
+      doi: "" #TODO
+      licence: "" #TODO
 
-## TODO nf-core: Add a description of all of the variables used as input
 input:
-  #
-  ## TODO nf-core: Delete / customise this example input
-  - bam:
+  - img:
       type: file
-      description: BAM/CRAM/SAM file
-      pattern: "*.{bam,cram,sam}"
+      description: Any image file supported by bioformats2raw
+      pattern: "*.{tif,tiff,png,jpg,ndpi}"
 
-## TODO nf-core: Add a description of all of the variables used as output
 output:
   #
   - versions:
       type: file
       description: File containing software versions
       pattern: "versions.yml"
-  ## TODO nf-core: Delete / customise this example output
-  - bam:
-      type: file
-      description: Sorted BAM/CRAM/SAM file
-      pattern: "*.{bam,cram,sam}"
+  - zarr:
+      type: path
+      description: input image in converted to zarr folder
+      pattern: "*.{zarr}"
 
 authors:
   - "@BioinfoTongLI"
