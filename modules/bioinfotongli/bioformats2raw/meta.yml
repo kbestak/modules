@@ -3,9 +3,10 @@ description: Java application to convert image file formats, including .mrxs, to
 keywords:
   - bioimage
   - conversion
+  - image_format
 tools:
   - "bioinfotongli":
-      description: "Modules that are reusable for my daily bioimage analysis"
+      description: "Modules that are reusable for daily bioimage analysis"
       homepage: ""
       documentation: ""
       tool_dev_url: ""
