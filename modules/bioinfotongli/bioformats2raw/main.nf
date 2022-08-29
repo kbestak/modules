@@ -23,10 +23,10 @@ process BIOINFOTONGLI_BIOFORMATS2RAW {
     //               Software MUST be pinned to channel (i.e. "bioconda"), version (i.e. "1.10").
     //               For Conda, the build (i.e. "h9402c20_2") must be EXCLUDED to support installation on different operating systems.
     // TODO nf-core: See section in main README for further information regarding finding and adding container addresses to the section below.
-    conda (params.enable_conda ? "YOUR-TOOL-HERE" : null)
+    conda (params.enable_conda ? "-c ome/label/pre bioformats2raw==0.5.0rc1" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/YOUR-TOOL-HERE':
-        'quay.io/biocontainers/YOUR-TOOL-HERE' }"
+        'quay.io/bioinfotongli/bioformats2raw:0.5.0rc1' }"
 
     input:
     // TODO nf-core: Where applicable all sample-specific information e.g. "id", "single_end", "read_group"
@@ -39,7 +39,7 @@ process BIOINFOTONGLI_BIOFORMATS2RAW {
 
     output:
     // TODO nf-core: Named file extensions MUST be emitted for ALL output channels
-    path "{$stem}.zarr", emit: bam
+    path "{$stem}.zarr", emit: zarr
     // TODO nf-core: List additional required output channels/values here
     path "versions.yml", emit: versions
 
@@ -62,8 +62,8 @@ process BIOINFOTONGLI_BIOFORMATS2RAW {
     """
     /opt/bioformats2raw/bin/bioformats2raw \\
         $args \\
-        $img
-        #-@ $task.cpus \\
+        $img \\
+        "${stem}.zarr"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
