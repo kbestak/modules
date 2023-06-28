@@ -5,10 +5,10 @@
 /*params.align_options          = [:]*/
 params.bf2raw_options = [:]
 
-include { BIOINFOTONGLI_RAW2OMETIFF as raw2ometiff } from '../../../modules/bioinfotongli/raw2ometiff/main' addParams( options: params.bf2raw_options    )
-include { BIOINFOTONGLI_BIOFORMATS2RAW as bf2raw } from '../../../modules/bioinfotongli/bioformats2raw/main' addParams( sort_options: params.samtools_sort_options, )
+include { BIOINFOTONGLI_RAW2OMETIFF as raw2ometiff } from '../../../../modules/sanger/bioinfotongli/raw2ometiff/main' addParams( options: params.bf2raw_options    )
+include { BIOINFOTONGLI_BIOFORMATS2RAW as bf2raw } from '../../../../modules/sanger/bioinfotongli/bioformats2raw/main' addParams( sort_options: params.samtools_sort_options, )
 
-workflow TO_OME_TIFF {
+workflow BIOINFOTONGLI_TO_OME_TIFF {
     take:
     images // channel: [ val(meta), file(image) ]
 
