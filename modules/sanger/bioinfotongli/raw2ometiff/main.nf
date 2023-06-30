@@ -8,6 +8,7 @@ process BIOINFOTONGLI_RAW2OMETIFF {
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         "bioinfotongli/raw2ometiff:${VERSION}":
         "bioinfotongli/raw2ometiff:${VERSION}" }"
+    publishDir params.out_dir , mode: 'copy'
 
     input:
     tuple val(meta), path(ome_zarr)
