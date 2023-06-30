@@ -30,7 +30,7 @@ process BIOINFOTONGLI_RAW2OMETIFF {
         $ome_zarr \\
         ${prefix}.ome.tif
 
-    cat <<-END_VERSIONS > versions.yml
+    cat <<-END_VERSIONS > raw2ometiff_versions.yml
     "${task.process}":
         bioinfotongli: \$(echo \$(raw2ometiff --version 2>&1) | sed 's/^.*raw2ometiff //; s/Using.*\$//' ))
     END_VERSIONS

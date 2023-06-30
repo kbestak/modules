@@ -30,7 +30,7 @@ process BIOINFOTONGLI_BIOFORMATS2RAW {
         $img \\
         "${stem}.zarr"
 
-    cat <<-END_VERSIONS > versions.yml
+    cat <<-END_VERSIONS > bioformats2raw_versions.yml
     "${task.process}":
         bioinfotongli: \$(echo \$(JAVA_HOME='/opt/conda/lib/jvm' /opt/conda/bin/bioformats2raw --version 2>&1) | sed 's/^.*bioformats2raw //; s/Using.*\$//' ))
     END_VERSIONS
