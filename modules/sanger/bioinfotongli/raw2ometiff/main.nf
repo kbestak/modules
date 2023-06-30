@@ -6,8 +6,8 @@ process BIOINFOTONGLI_RAW2OMETIFF {
 
     conda (params.enable_conda ? "-c ome raw2ometiff=${VERSION}" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        "openmicroscopy/raw2ometiff:${VERSION}":
-        "openmicroscopy/raw2ometiff:${VERSION}" }"
+        "bioinfotongli/raw2ometiff:${VERSION}":
+        "bioinfotongli/raw2ometiff:${VERSION}" }"
 
     input:
     tuple val(meta), path(ome_zarr)
