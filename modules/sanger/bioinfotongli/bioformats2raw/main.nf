@@ -20,11 +20,8 @@ process BIOINFOTONGLI_BIOFORMATS2RAW {
     task.ext.when == null || task.ext.when
 
     script:
-    def stem = meta['id'] ?: img.baseName
+    stem = meta['id'] ?: img.baseName
     def args = task.ext.args ?: ''
-
-    // TODO nf-core: If the tool supports multi-threading then you MUST provide the appropriate parameter
-    //               using the Nextflow "task" variable e.g. "--threads $task.cpus"
     """
     JAVA_HOME='/opt/conda/lib/jvm' /opt/conda/bin/bioformats2raw \\
         --max_workers=$task.cpus \\
