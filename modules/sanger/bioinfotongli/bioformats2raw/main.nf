@@ -4,8 +4,6 @@ process BIOINFOTONGLI_BIOFORMATS2RAW {
     tag "${meta.id}"
     label 'process_medium'
 
-    cpus task.cpus
-
     conda (params.enable_conda ? "-c ome bioformats2raw==${VERSION}" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         "openmicroscopy/bioformats2raw:${VERSION}":
@@ -29,8 +27,8 @@ process BIOINFOTONGLI_BIOFORMATS2RAW {
     //               using the Nextflow "task" variable e.g. "--threads $task.cpus"
     """
     /opt/conda/bin/bioformats2raw \\
+        --max_workers=$task.cpus \\
         $args \\
-        --max_workers $task.cpus \\
         $img \\
         "${stem}.zarr"
 
