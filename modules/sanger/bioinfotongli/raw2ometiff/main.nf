@@ -15,7 +15,7 @@ process BIOINFOTONGLI_RAW2OMETIFF {
 
     output:
     tuple val(meta), path("${prefix}.ome.tif"), emit: ome_tif
-    path "versions.yml"           , emit: versions
+    path "raw2ometiff_versions.yml"           , emit: versions
 
     when:
     task.ext.when == null || task.ext.when

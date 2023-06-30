@@ -15,7 +15,7 @@ process BIOINFOTONGLI_BIOFORMATS2RAW {
 
     output:
     tuple val(meta), path("${stem}.zarr"), emit: zarr
-    path "versions.yml", emit: versions
+    path "bioformats2raw_versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
