@@ -32,7 +32,7 @@ process BIOINFOTONGLI_BIOFORMATS2RAW {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(echo \$(bioformats2raw --version 2>&1) | sed 's/^.*bioformats2raw //; s/Using.*\$//' ))
+        bioinfotongli: \$(echo \$(JAVA_HOME='/opt/conda/lib/jvm' /opt/conda/bin/bioformats2raw --version 2>&1) | sed 's/^.*bioformats2raw //; s/Using.*\$//' ))
     END_VERSIONS
     """
 }
