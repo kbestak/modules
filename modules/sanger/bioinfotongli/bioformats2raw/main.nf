@@ -26,7 +26,7 @@ process BIOINFOTONGLI_BIOFORMATS2RAW {
     // TODO nf-core: If the tool supports multi-threading then you MUST provide the appropriate parameter
     //               using the Nextflow "task" variable e.g. "--threads $task.cpus"
     """
-    /opt/conda/bin/bioformats2raw \\
+    JAVA_HOME='/opt/conda/lib/jvm' /opt/conda/bin/bioformats2raw \\
         --max_workers=$task.cpus \\
         $args \\
         $img \\
