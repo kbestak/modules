@@ -21,7 +21,7 @@ process BIOINFOTONGLI_RAW2OMETIFF {
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    prefix = task.ext.prefix ?: "${meta.id}"
     """
     raw2ometiff \\
         --max_workers=$task.cpus \\
