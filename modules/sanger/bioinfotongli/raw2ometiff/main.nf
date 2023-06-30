@@ -26,7 +26,7 @@ process BIOINFOTONGLI_RAW2OMETIFF {
     raw2ometiff \\
         --max_workers=$task.cpus \\
         $args \\
-        -o ${prefix}.ome.tif \\
+        ${prefix}.ome.tif \\
         $ome_zarr \\
 
     cat <<-END_VERSIONS > versions.yml
