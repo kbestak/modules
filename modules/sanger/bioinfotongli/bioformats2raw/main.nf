@@ -13,7 +13,7 @@ process BIOINFOTONGLI_BIOFORMATS2RAW {
     tuple val(meta), path(img)
 
     output:
-    path "{$stem}.zarr", emit: zarr
+    path "${stem}.zarr", emit: zarr
     path "versions.yml", emit: versions
 
     when:
