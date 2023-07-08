@@ -449,6 +449,10 @@ bioinfotongli/bioformats2raw:
   - modules/bioinfotongli/bioformats2raw/**
   - tests/modules/bioinfotongli/bioformats2raw/**
 
+bioinfotongli/cellpose:
+  - modules/sanger/bioinfotongli/cellpose/**
+  - tests/modules/sanger/bioinfotongli/cellpose/**
+
 biscuit/align:
   - modules/nf-core/biscuit/index/**
   - modules/nf-core/biscuit/align/**
