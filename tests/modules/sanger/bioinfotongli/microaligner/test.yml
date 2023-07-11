@@ -1,0 +1,13 @@
+## TODO nf-core: Please run the following command to build this file:
+#                nf-core modules create-test-yml /microaligner
+- name: "bioinfotongli microaligner"
+  command: nextflow run ./tests/modules/sanger/bioinfotongli/microaligner -entry test_bioinfotongli_microaligner -c ./tests/config/nextflow.config -c ./tests/modules/sanger/bioinfotongli/microaligner/nextflow.config
+  tags:
+    - "bioinfotongli"
+    - "bioinfotongli/microaligner"
+  files:
+    - path: "output/bioinfotongli/test.bam"
+      md5sum: e667c7caad0bc4b7ac383fd023c654fc
+    - path: "output/bioinfotongli/versions.yml"
+      md5sum: a01fe51bc4c6a3a6226fbf77b2c7cf3b
+    

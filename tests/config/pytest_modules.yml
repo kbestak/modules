@@ -453,6 +453,10 @@ bioinfotongli/cellpose:
   - modules/sanger/bioinfotongli/cellpose/**
   - tests/modules/sanger/bioinfotongli/cellpose/**
 
+bioinfotongli/microaligner:
+  - modules/sanger/bioinfotongli/microaligner/**
+  - tests/modules/sanger/bioinfotongli/microaligner/**
+
 biscuit/align:
   - modules/nf-core/biscuit/index/**
   - modules/nf-core/biscuit/align/**
