@@ -15,7 +15,7 @@
 // TODO nf-core: Optional inputs are not currently supported by Nextflow. However, using an empty
 //               list (`[]`) instead of a file can be used to work around this issue.
 
-VERSION=0.6.2
+VERSION="0.6.2"
 
 process BIOINFOTONGLI_BAYSOR {
     tag '$spots'
