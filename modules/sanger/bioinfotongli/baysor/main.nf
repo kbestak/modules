@@ -29,6 +29,7 @@ process BIOINFOTONGLI_BAYSOR {
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'vpetukhov/baysor:v0.6.2':
         'vpetukhov/baysor:v0.6.2' }"
+    containerOptions "${ workflow.containerEngine == 'singularity' ? '--nv':'--gpus all --user root -d'}"
 
     input:
     // TODO nf-core: Where applicable all sample-specific information e.g. "id", "single_end", "read_group"
