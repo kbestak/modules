@@ -62,7 +62,7 @@ process BIOINFOTONGLI_BAYSOR {
     // TODO nf-core: Please indent the command appropriately (4 spaces!!) to help with readability ;)
     """
     baysor \\
-        $spot \\
+        $spots \\
         $seg \\
         $args \\
 
