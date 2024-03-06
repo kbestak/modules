@@ -61,14 +61,14 @@ process BIOINFOTONGLI_BAYSOR {
     // TODO nf-core: Please replace the example samtools command below with your module's command
     // TODO nf-core: Please indent the command appropriately (4 spaces!!) to help with readability ;)
     """
-    baysor \\
+    baysor run \\
         $spots \\
         $seg \\
         $args \\
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: ${VERSION}
+        bioinfotongli: baysor ${VERSION}
     END_VERSIONS
     """
 
@@ -84,7 +84,7 @@ process BIOINFOTONGLI_BAYSOR {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(baysor --version |& sed '1!d ; s/samtools //')
+        bioinfotongli: baysor ${VERSION}
     END_VERSIONS
     """
 }
