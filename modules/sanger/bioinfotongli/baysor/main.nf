@@ -27,8 +27,8 @@ process BIOINFOTONGLI_BAYSOR {
     // TODO nf-core: See section in main README for further information regarding finding and adding container addresses to the section below.
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'vpetukhov/baysor:v${VERSION}':
-        'vpetukhov/baysor:v${VERSION}' }"
+        'vpetukhov/baysor:v0.6.2':
+        'vpetukhov/baysor:v0.6.2' }"
 
     input:
     // TODO nf-core: Where applicable all sample-specific information e.g. "id", "single_end", "read_group"
