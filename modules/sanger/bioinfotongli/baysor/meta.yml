@@ -17,30 +17,22 @@ tools:
       doi: ""
       licence: 
 
-## TODO nf-core: Add a description of all of the variables used as input
 input:
   #
   ## TODO nf-core: Delete / customise this example input
   - spot:
       type: file
-      description: CSV file
+      description: CSV file containing decoded RNA spots
       pattern: "*.{csv,tsv}"
-  - seg:
-      type: file
-      description: segmentation image file
-      pattern: "*.{tif,tiff}"
 
-## TODO nf-core: Add a description of all of the variables used as output
 output:
-  #
   - versions:
       type: file
       description: File containing software versions
       pattern: "versions.yml"
-  ## TODO nf-core: Delete / customise this example output
   - segmentation:
       type: file
-      description: CSV file
+      description: segmentation output
       pattern: "*.csv"
 
 authors:

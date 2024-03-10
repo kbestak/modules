@@ -38,7 +38,7 @@ process BIOINFOTONGLI_BAYSOR {
     //               https://github.com/nf-core/modules/blob/master/modules/nf-core/bwa/index/main.nf
     // TODO nf-core: Where applicable please provide/convert compressed files as input/output
     //               e.g. "*.fastq.gz" and NOT "*.fastq", "*.bam" and NOT "*.sam" etc.
-    tuple path(spots), path(seg)
+    path(spots)
 
     output:
     // TODO nf-core: Named file extensions MUST be emitted for ALL output channels
@@ -64,7 +64,6 @@ process BIOINFOTONGLI_BAYSOR {
     """
     baysor run \\
         $spots \\
-        $seg \\
         $args \\
 
     cat <<-END_VERSIONS > versions.yml
