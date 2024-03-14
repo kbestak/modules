@@ -6,7 +6,7 @@ workflow BASIC_WSI {
 
     take:
     zarr // channel: [  zarr  ]
-    channel_index // channel: 0..4
+    channel_index // channel: 0..3
 
     main:
 
@@ -25,7 +25,7 @@ workflow BASIC_WSI {
         [it[0].toInteger(), it[1].sort()] // group basic models by field. e.g. [field_id, [model1, model2, ...]]
     }
     
-    fields = channel.fromPath("${params.zarr}/*[0-9]", type: 'dir').map{ it ->
+    fields = channel.fromPath("${zarr}/*[0-9]", type: 'dir').map{ it ->
         [placeholder, placeholder, placeholder, it]
     }
     
@@ -39,4 +39,3 @@ workflow BASIC_WSI {
     corrected_zarr      = BIOINFOTONGLI_BASICTRANSFORM.out.corrected_images           // channel: [ val(P), val(row), val(col), path(corrected_zarr) ]
     versions = ch_versions                     // channel: [ versions.yml ]
 }
-

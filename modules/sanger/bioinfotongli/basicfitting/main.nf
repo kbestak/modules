@@ -1,11 +1,7 @@
 process BIOINFOTONGLI_BASICFITTING {
-    tag "$C $P $T"
+    tag "C:$C P:$P T:$T"
     label 'process_high'
 
-    // TODO nf-core: List required Conda package(s).
-    //               Software MUST be pinned to channel (i.e. "bioconda"), version (i.e. "1.10").
-    //               For Conda, the build (i.e. "h9402c20_2") must be EXCLUDED to support installation on different operating systems.
-    // TODO nf-core: See section in main README for further information regarding finding and adding container addresses to the section below.
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'bioinfotongli/basic_zarr:latest':
@@ -37,7 +33,7 @@ process BIOINFOTONGLI_BASICFITTING {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(basic_fitting.py version)
+        bioinfotongli: \$(/opt/basic_fitting.py version)
     END_VERSIONS
     """
 
@@ -48,7 +44,7 @@ process BIOINFOTONGLI_BASICFITTING {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(basic_fitting.py version)
+        bioinfotongli: \$(/opt/basic_fitting.py version)
     END_VERSIONS
     """
 }

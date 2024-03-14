@@ -16,7 +16,7 @@
 //               list (`[]`) instead of a file can be used to work around this issue.
 
 process BIOINFOTONGLI_BASICTRANSFORM {
-    tag "$C $P $T"
+    tag "C:$C P:$P T:$T"
     label 'process_medium'
 
     // TODO nf-core: List required Conda package(s).
@@ -61,7 +61,7 @@ process BIOINFOTONGLI_BASICTRANSFORM {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(/opt/BaSiC_transforming.py)
+        bioinfotongli: \$(/opt/BaSiC_transforming.py version)
     END_VERSIONS
     """
 }
