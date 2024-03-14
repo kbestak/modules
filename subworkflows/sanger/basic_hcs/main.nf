@@ -25,7 +25,7 @@ workflow BASIC_HCS {
         [it[0].toInteger(), it[1].sort()] // group basic models by field. e.g. [field_id, [model1, model2, ...]]
     }
     
-    fields = channel.fromPath("${params.zarr}/*/*/*", type: 'dir').map{ it ->
+    fields = channel.fromPath("${zarr}/*/*/*", type: 'dir').map{ it ->
         String f = it.baseName
         String col = it.parent.baseName
         String row = it.parent.parent.baseName
