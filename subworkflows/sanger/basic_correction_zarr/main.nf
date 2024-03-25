@@ -37,13 +37,13 @@ workflow BASIC_CORRECTION_ZARR {
 
     ch_versions = Channel.empty()
 
-    Generate_ome_zarr_stub(params.zarr)
+    Generate_ome_zarr_stub(ome_zarr)
 
     def jsonSlurper = new JsonSlurper()
-    def md = jsonSlurper.parse(new File(params.zarr + "/.zattrs"))
+    def md = jsonSlurper.parse(new File(ome_zarr + "/.zattrs"))
 
     // Read the OME-XML file to get the number of channels. 
-    def xmlFile = new File(params.zarr + "/OME/METADATA.ome.xml")
+    def xmlFile = new File(ome_zarr + "/OME/METADATA.ome.xml")
     def xml = new XmlParser().parse(xmlFile)
     def n_channel = xml.Image[0].Pixels[0].Channel.size()
     channels = (0..<n_channel).toList()
@@ -54,12 +54,12 @@ workflow BASIC_CORRECTION_ZARR {
         fields = [-1]
         wells = channel.from(0..<xml.Image.size()).map{ it ->
             [['path': it, "rowIndex":"", "columnIndex":""], 
-            file(params.zarr + "/" + it)]
+            file(ome_zarr + "/" + it)]
         }
     } else {
         fields = (0..<md['plate']['field_count']).toList()
         wells = channel.from(md['plate']['wells']).map{ it ->
-            [it, file(params.zarr + "/" + it['path'])]
+            [it, file(ome_zarr + "/" + it['path'])]
         }
     }
     // The models are fitted for each channel, Z and field in the well.
