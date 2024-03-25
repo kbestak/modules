@@ -1,3 +1,6 @@
+import groovy.json.JsonSlurper
+import groovy.xml.XmlParser
+
 include { BIOINFOTONGLI_BASICFITTING      } from '../../../modules/sanger/bioinfotongli/basicfitting/main'
 include { BIOINFOTONGLI_BASICTRANSFORM     } from '../../../modules/sanger/bioinfotongli/basictransform/main'
 
