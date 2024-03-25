@@ -10,10 +10,10 @@ process BIOINFOTONGLI_BASICFITTING {
     storeDir params.out_dir + "/BaSiC_models/"
 
     input:
-    tuple path(zarr_root), val(C), val(P), val(T)
+    tuple path(zarr_root), val(field), val(C), val(T)
 
     output:
-    tuple val(P), path(expected_model_dir), emit: basic_models 
+    tuple val(field), path(expected_model_dir), emit: basic_models 
     path "versions.yml"           , emit: versions
 
     when:
@@ -21,30 +21,31 @@ process BIOINFOTONGLI_BASICFITTING {
 
     script:
     def args = task.ext.args ?: ''
-    expected_model_dir = "BaSiC_model_C${C}_P${P}_T${T}"
+    expected_model_dir = "BaSiC_model_F${field}_C${C}_T${T}"
     """
-    /opt/BaSiC_fitting.py run \
+    /opt/scripts/basic/BaSiC_fitting.py run \
         -zarr ${zarr_root} \
+        -field ${field} \
         -C ${C} \
-        -P ${P} \
         -T ${T} \
         -out ${expected_model_dir} \
-        ${args}
+        ${args} 
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(/opt/basic_fitting.py version)
+        bioinfotongli: \$(/opt/scripts/basic/BaSiC_fitting.py version)
     END_VERSIONS
     """
 
     stub:
     def args = task.ext.args ?: ''
+    expected_model_dir = "BaSiC_model_F${field}_C${C}_T${T}"
     """
-    mkdir BaSiC_model_C0_P0_T0
+    mkdir ${expected_model_dir}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(/opt/basic_fitting.py version)
+        bioinfotongli: \$(/opt/scripts/basic/BaSiC_fitting.py version)
     END_VERSIONS
     """
 }
