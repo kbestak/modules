@@ -13,7 +13,7 @@ process BIOINFOTONGLI_BASICFITTING {
     tuple path(zarr_root), val(field), val(C), val(T)
 
     output:
-    tuple val(field), path(expected_model_dir), emit: basic_models 
+    tuple val(meta), val(field), path(expected_model_dir), emit: basic_models 
     path "versions.yml"           , emit: versions
 
     when:
@@ -22,6 +22,8 @@ process BIOINFOTONGLI_BASICFITTING {
     script:
     def args = task.ext.args ?: ''
     expected_model_dir = "BaSiC_model_F${field}_C${C}_T${T}"
+    def meta = [:]
+    meta["id"] = zarr_root
     """
     /opt/scripts/basic/BaSiC_fitting.py run \
         -zarr ${zarr_root} \
