@@ -32,7 +32,7 @@ process BIOINFOTONGLI_BASICFITTING {
         -field ${field} \
         -C ${C} \
         -T ${T} \
-        -out ${expected_model_dir} \
+        -out "${expected_model_dir}" \
         ${args} 
 
     cat <<-END_VERSIONS > versions.yml
