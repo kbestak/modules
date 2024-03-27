@@ -22,7 +22,7 @@ process BIOINFOTONGLI_BASICFITTING {
     script:
     def args = task.ext.args ?: ''
     expected_model_dir = "BaSiC_model_F${field}_C${C}_T${T}"
-    def meta = [:]
+    meta = [:]
     meta["id"] = zarr_root
     """
     /opt/scripts/basic/BaSiC_fitting.py run \
