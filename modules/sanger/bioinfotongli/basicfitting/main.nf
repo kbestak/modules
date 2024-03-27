@@ -21,7 +21,7 @@ process BIOINFOTONGLI_BASICFITTING {
 
     script:
     def args = task.ext.args ?: ''
-    expected_model_dir = "BaSiC_model_F${field}_C${C}_T${T}"
+    expected_model_dir = "${zarr_root}/BaSiC_model_F${field}_C${C}_T${T}"
     meta = [:]
     meta["id"] = zarr_root
     """
