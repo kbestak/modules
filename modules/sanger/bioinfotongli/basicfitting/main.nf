@@ -1,5 +1,5 @@
 process BIOINFOTONGLI_BASICFITTING {
-    tag "C:$C P:$P T:$T"
+    tag "C:$C Field:$field T:$T"
     label 'process_high'
 
     conda "${moduleDir}/environment.yml"
@@ -7,7 +7,7 @@ process BIOINFOTONGLI_BASICFITTING {
         'bioinfotongli/basic_zarr:latest':
         'bioinfotongli/basic_zarr:latest'}"
     // containerOptions "${workflow.containerEngine == 'singularity' ? '--nv':'--gpus all'}" // GPU memory is not enough to load all tiles at once
-    storeDir params.out_dir + "/BaSiC_models/"
+    publishDir params.out_dir + "/BaSiC_models/", mode: 'copy'
 
     input:
     tuple path(zarr_root), val(field), val(C), val(T)
