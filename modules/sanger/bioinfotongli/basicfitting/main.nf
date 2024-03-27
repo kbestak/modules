@@ -26,7 +26,7 @@ process BIOINFOTONGLI_BASICFITTING {
     meta = [:]
     meta["id"] = stem 
     """
-    mkdir ${stem}
+    mkdir "${stem}"
     /opt/scripts/basic/BaSiC_fitting.py run \
         -zarr ${zarr_root} \
         -field ${field} \
