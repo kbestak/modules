@@ -1,5 +1,5 @@
 process BIOINFOTONGLI_BASICFITTING {
-    tag "C:$C Field:$field T:$T"
+    tag "ID: $meta.id C:$C Field:$field T:$T"
     label 'process_high'
 
     conda "${moduleDir}/environment.yml"
@@ -10,10 +10,10 @@ process BIOINFOTONGLI_BASICFITTING {
     publishDir params.out_dir + "/BaSiC_models/", mode: 'copy'
 
     input:
-    tuple path(zarr_root), val(field), val(C), val(T)
+    tuple val(meta), path(zarr_root), val(field), val(C), val(T) // The BsSiC model is trained on each field, C and T
 
     output:
-    tuple val(meta), val(field), path(expected_model_dir), emit: basic_models 
+    tuple val(meta), val(field), path(expected_model_dir), emit: basic_models  // The trained BaSiC model tagged with corresponding field ID
     path "versions.yml"           , emit: versions
 
     when:
@@ -21,10 +21,8 @@ process BIOINFOTONGLI_BASICFITTING {
 
     script:
     def args = task.ext.args ?: ''
-    stem = zarr_root.baseName
+    stem = meta['id']
     expected_model_dir = "${stem}/BaSiC_model_F${field}_C${C}_T${T}"
-    meta = [:]
-    meta["id"] = stem 
     """
     mkdir "${stem}"
     /opt/scripts/basic/BaSiC_fitting.py run \

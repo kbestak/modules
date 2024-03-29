@@ -1,5 +1,5 @@
 process BIOINFOTONGLI_BASICTRANSFORM {
-    tag "C:$C P:$P T:$T"
+    tag "ID: $meta.id Field:$field"
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
@@ -9,11 +9,10 @@ process BIOINFOTONGLI_BASICTRANSFORM {
     storeDir params.out_dir
 
     input:
-    tuple val(fov), val(well_info), path(field), path(models)
-    val(new_zarr_root) 
+    tuple val(meta), val(fov), path(zarr_root), val(field), path(models), val(new_zarr_root)
 
     output:
-    tuple val(fov), val(well_info), path(expected_dir), emit: corrected_images
+    tuple val(meta), path(expected_dir), emit: corrected_images
     path "versions.yml"           , emit: versions
 
     when:
@@ -21,12 +20,12 @@ process BIOINFOTONGLI_BASICTRANSFORM {
 
     script:
     def args = task.ext.args ?: ''
-    def internal_path_to_root = well_info['path'] + "/"
-    fov_to_correct = fov == -1 ? field: "${field}/${fov}"
-    expected_dir = fov == -1 ? "${new_zarr_root}/${internal_path_to_root}":"${new_zarr_root}/${internal_path_to_root}${fov}"
+    fov_to_correct = fov == "-1" ? field: "${field}/${fov}"
+    new_zarr_root_name = file(new_zarr_root).name
+    expected_dir = "${new_zarr_root_name}/${fov_to_correct}"
     """
     /opt/scripts/basic/BaSiC_transforming.py run \
-        -field ${fov_to_correct} \
+        -field "${zarr_root}/${fov_to_correct}" \
         -out_dir "${expected_dir}" \
         ${args}
     
