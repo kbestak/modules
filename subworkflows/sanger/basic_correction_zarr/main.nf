@@ -25,8 +25,7 @@ process Generate_ome_zarr_stub {
     new_ome_zarr = zarr_root.baseName + "_corrected.zarr"
     fovs = "${new_ome_zarr}/fovs.json"
     """
-    #/opt/scripts/basic/Generate_ome_zarr_stub.py run
-    Generate_ome_zarr_stub.py run \
+    /opt/scripts/basic/Generate_ome_zarr_stub.py run \
         -zarr_in ${zarr_root} \
         -out_zarr_name "${new_ome_zarr}" \
         -out_fov_json "${fovs}"
