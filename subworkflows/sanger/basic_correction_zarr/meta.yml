@@ -16,7 +16,7 @@ input:
       type: file
       description: |
         The input channel containing the ome_zarr files
-        Structure: [ path(ome_zarr) ]
+        Structure: [ val(meta), path(ome_zarr) ]
       pattern: "*.zarr"
 
 # TODO
@@ -26,7 +26,7 @@ output:
       description: |
         Channel containing corrected ome_zarr images 
         Structure: [ val(meta), path(corrected_ome_zarr) ]
-      pattern: "*.csi"
+      pattern: "*_corrected.zarr"
   - versions:
       type: file
       description: |
