@@ -25,7 +25,7 @@ process BIOINFOTONGLI_BASICTRANSFORM {
     expected_dir = "${new_zarr_root_name}/${fov_to_correct}"
     """
     /opt/scripts/basic/BaSiC_transforming.py run \
-        -field "${zarr_root}/${fov_to_correct}" \
+        -field ${zarr_root}/${fov_to_correct} \
         -out_dir "${expected_dir}" \
         ${args}
     
