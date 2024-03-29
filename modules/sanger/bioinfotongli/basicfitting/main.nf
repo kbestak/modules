@@ -7,7 +7,7 @@ process BIOINFOTONGLI_BASICFITTING {
         'bioinfotongli/basic_zarr:latest':
         'bioinfotongli/basic_zarr:latest'}"
     // containerOptions "${workflow.containerEngine == 'singularity' ? '--nv':'--gpus all'}" // GPU memory is not enough to load all tiles at once
-    publishDir params.out_dir + "/BaSiC_models/", mode: 'copy'
+    storeDir params.out_dir + "/BaSiC_models/"
 
     input:
     tuple val(meta), path(zarr_root), val(field), val(C), val(T) // The BsSiC model is trained on each field, C and T
