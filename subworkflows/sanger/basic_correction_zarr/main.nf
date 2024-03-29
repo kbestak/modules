@@ -12,7 +12,7 @@ process Generate_ome_zarr_stub {
     publishDir params.out_dir, mode: 'copy'
 
     input:
-    path(zarr_root)
+    tuple val(meta), path(zarr_root)
 
     output:
     tuple val(meta), path(new_ome_zarr), emit: ome_zarr_stub
@@ -20,8 +20,8 @@ process Generate_ome_zarr_stub {
 
     script:
     meta = [:]
-    meta['id'] = zarr_root.baseName
-    new_ome_zarr = zarr_root.baseName + "_corrected.zarr"
+    meta['id'] = meta['id']? meta['id']:zarr_root.baseName
+    new_ome_zarr = meta['id'] + "_corrected.zarr"
     fovs = "${new_ome_zarr}/fovs.json"
     """
     /opt/scripts/basic/Generate_ome_zarr_stub.py run \
