@@ -9,7 +9,6 @@ process Generate_ome_zarr_stub {
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'bioinfotongli/basic_zarr:latest':
         'bioinfotongli/basic_zarr:latest'}"
-    // storeDir params.out_dir
     publishDir params.out_dir, mode: 'copy'
 
     input:
@@ -45,8 +44,6 @@ workflow BASIC_CORRECTION_ZARR {
         for_fitting: [it[0], it[1], it[2], it[3], it[4]]
         for_transforming: [it[0], it[2], it[1], it[5]]
     }
-    // datas.for_fitting.unique().view()
-    // datas.for_transforming.unique().view()
 
     // The models are fitted for each channel, Z and field in the well.
     // Typically for each channel the models expect an array of shape (xxx, Z, Y, X)
@@ -56,19 +53,15 @@ workflow BASIC_CORRECTION_ZARR {
     basic_models = BIOINFOTONGLI_BASICFITTING.out.basic_models.groupTuple(by:[0, 1]).map{ it ->
         [it[0], it[1], it[2].sort()] // group basic models by field. e.g. [field_id, [model1, model2, ...]]
     }
-    // basic_models.view()
     
     BIOINFOTONGLI_BASICTRANSFORM(
         datas.for_transforming.unique()
             .combine(basic_models, by: [0,1])
             .combine(Generate_ome_zarr_stub.out.ome_zarr_stub, by:0)
-        // channel.from(fields).combine(wells).combine(basic_models, by: 0),
-        // Generate_ome_zarr_stub.out.ome_zarr_stub.name
     )
     ch_versions = ch_versions.mix(BIOINFOTONGLI_BASICTRANSFORM.out.versions.first())
 
     emit:
-    corrected_ome_zarr      = BIOINFOTONGLI_BASICTRANSFORM.out.corrected_images           // channel: [ val(fov), val(well_info), path(corrected_images) ]
+    corrected_ome_zarr      = Generate_ome_zarr_stub.out.ome_zarr_stub           // channel: [ val(meta), path(corrected_zarr) ]
     versions = ch_versions                     // channel: [ versions.yml ]
 }
-
