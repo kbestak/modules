@@ -23,8 +23,8 @@ process BIOINFOTONGLI_OMEZARRPARSE {
     params_in_json = file(ome_zarr_root).baseName + ".json"
     """
     /opt/scripts/ome_zarr_parse.py run \\
-        -zarr_path $params_in_json \\
-        -out_params_json $ome_zarr_root \\
+        -zarr_path $ome_zarr_root \\
+        -out_params_json $params_in_json \\
         $args \\
 
     cat <<-END_VERSIONS > versions.yml
