@@ -22,7 +22,7 @@ process BIOINFOTONGLI_OMEZARRPARSE {
     def prefix = task.ext.prefix ?: "${meta.id}"
     params_in_json = file(ome_zarr_root).baseName + ".json"
     """
-    /opt/scripts/ome_zarr_parse.py \\
+    /opt/scripts/ome_zarr_parse.py run \\
         -zarr_path $params_in_json \\
         -out_params_json $ome_zarr_root \\
         $args \\
