@@ -11,7 +11,7 @@ process BIOINFOTONGLI_OMEZARRPARSE {
     tuple val(meta), path(ome_zarr_root)
 
     output:
-    tuple val(meta), path(params_in_json), emit: params_in_json
+    tuple val(meta), path(params_in_json), path(out_zarr_name), emit: fovs_to_process
     path "versions.yml"           , emit: versions
 
     when:
@@ -20,16 +20,18 @@ process BIOINFOTONGLI_OMEZARRPARSE {
     script:
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
+    out_zarr_name = prefix + ".zarr"
     params_in_json = file(ome_zarr_root).baseName + ".json"
     """
-    /opt/scripts/ome_zarr_parse.py run \\
-        -zarr_path $ome_zarr_root \\
+    /opt/scripts/Generate_ome_zarr_stub.py run \\
+        -zarr_in $ome_zarr_root \\
+        -out_zarr_name $out_zarr_name \\
         -out_params_json $params_in_json \\
         $args \\
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(/opt/scripts/ome_zarr_parse.py version)
+        bioinfotongli: \$(/opt/scripts/Generate_ome_zarr_stub.py version)
     END_VERSIONS
     """
 
@@ -42,7 +44,7 @@ process BIOINFOTONGLI_OMEZARRPARSE {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(/opt/scripts/ome_zarr_parse.py version)
+        bioinfotongli: \$(/opt/scripts/Generate_ome_zarr_stub.py version)
     END_VERSIONS
     """
 }
