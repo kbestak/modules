@@ -12,8 +12,8 @@ process BIOINFOTONGLI_OMEZARRPARSE {
     tuple val(meta), path(ome_zarr_root)
 
     output:
-    tuple path(params_in_json), emit: fovs_to_process
-    tuple val(meta), path(out_zarr_name), emit: fovs_to_process
+    path(params_in_json), emit: fovs_to_process
+    tuple val(meta), path(out_zarr_name), emit: out_ome_zarr_with_meta
     path "versions.yml"           , emit: versions
 
     when:
