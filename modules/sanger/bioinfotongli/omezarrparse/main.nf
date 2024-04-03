@@ -6,12 +6,14 @@ process BIOINFOTONGLI_OMEZARRPARSE {
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'bioinfotongli/omezarrparse':
         'bioinfotongli/omezarrparse' }"
+    storeDir params.out_dir
 
     input:
     tuple val(meta), path(ome_zarr_root)
 
     output:
-    tuple val(meta), path(params_in_json), path(out_zarr_name), emit: fovs_to_process
+    tuple path(params_in_json), emit: fovs_to_process
+    tuple val(meta), path(out_zarr_name), emit: fovs_to_process
     path "versions.yml"           , emit: versions
 
     when:
