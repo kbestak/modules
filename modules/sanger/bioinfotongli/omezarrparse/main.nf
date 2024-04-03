@@ -26,7 +26,7 @@ process BIOINFOTONGLI_OMEZARRPARSE {
     /opt/scripts/Generate_ome_zarr_stub.py run \\
         -zarr_in $ome_zarr_root \\
         -out_zarr_name $out_zarr_name \\
-        -out_params_json $params_in_json \\
+        -out_fov_json $params_in_json \\
         $args \\
 
     cat <<-END_VERSIONS > versions.yml
