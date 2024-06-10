@@ -10,25 +10,24 @@ tools:
       homepage: ""
       documentation: ""
       tool_dev_url: ""
-      doi: "" #TODO
-      licence: "" #TODO
+      doi: ""
+      licence: ""
 
 input:
   - img:
-      type: file
-      description: Any image file supported by bioformats2raw
-      pattern: "*.{tif,tiff,png,jpg,ndpi}"
+      type: list
+      description: Any image file supported by bioformats2raw, along with the meta information
+      pattern: "[ meta, *.{tif,tiff,png,jpg,ndpi} ]"
 
 output:
-  #
   - versions:
       type: file
       description: File containing software versions
       pattern: "versions.yml"
   - zarr:
-      type: path
-      description: input image in converted to zarr folder
-      pattern: "*.{zarr}"
+      type: list
+      description: input image in converted to zarr folder along with the meta information
+      pattern: "[ meta, *.{zarr} ]"
 
 authors:
   - "@BioinfoTongLI"
