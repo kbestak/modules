@@ -47,13 +47,8 @@ input:
       pattern: "*.zarr"
 
 output:
-   - meta:
-      type: dict 
-      description: meta data of the zarr file
-      pattern: " "
-  
-- expected_dir:
-      type: folder 
+   - corrected_images:
+      type: list
       description: the FOV folder containing the transformed images
       pattern: " "
 
