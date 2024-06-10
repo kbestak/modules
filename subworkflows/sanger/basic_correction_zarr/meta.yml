@@ -14,34 +14,18 @@ components:
 
 input:
   - meta:
-      type: map
+      type: list
       description: |
-        The meta information of the input data
-        Structure: { val(meta) }
-      pattern: ""
+        The meta information of the input data and the raw zarr path
+      pattern: "[ val(meta), path(ome_zarr) ]"
     
-  - ome_zarr:
-      type: file
-      description: |
-        The input channel containing the ome_zarr files
-        Structure: [ val(meta), path(ome_zarr) ]
-      pattern: "*.zarr"
-
-# TODO
 output:
-  - meta:
-      type: map
+  - ome_tif:
+      type: list 
       description: |
-        The meta information of the input data
-        Structure: { val(meta) }
-      pattern: ""
+        The meta information of the input data and the converted image
+      pattern: "[ val(meta), path(corrected_ome_zarr) ]"
 
-  - corrected_ome_zarr:
-      type: file
-      description: |
-        Channel containing corrected ome_zarr images 
-        Structure: [ val(meta), path(corrected_ome_zarr) ]
-      pattern: "*_corrected.zarr"
   - versions:
       type: file
       description: |
