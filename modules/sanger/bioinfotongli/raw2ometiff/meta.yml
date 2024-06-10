@@ -15,39 +15,24 @@ tools:
       doi: ""
       licence: "https://github.com/glencoesoftware/raw2ometiff/blob/master/LICENSE.txt"
 
-## TODO nf-core: Add a description of all of the variables used as input
 input:
-  # Only when we have meta
   - meta:
-      type: map
+      type: list
       description: |
-        Groovy Map containing sample information
-        e.g. [ id:'test', single_end:false ]
-  #
-  ## TODO nf-core: Delete / customise this example input
-  - ome_zarr:
-      type: file
-      description: zarr file folder
-      pattern: "*.{ome.zarr,.zarr}"
+        Groovy Map containing sample information and the path to the zarr file
+      pattern: "[ id:'test', *.{zarr} ]"
 
-## TODO nf-core: Add a description of all of the variables used as output
 output:
-  #Only when we have meta
-  - meta:
+  - ome_tif:
       type: map
       description: |
-        Groovy Map containing sample information
-        e.g. [ id:'test', single_end:false ]
-  #
+        Groovy Map containing sample information and convereted pyramidal ome.tiff file
+      pattern: "[ id:'test', '*.{ome.tiff,ome.tif}' ]"
+
   - versions:
       type: file
       description: File containing software versions
       pattern: "versions.yml"
-  ## TODO nf-core: Delete / customise this example output
-  - ome_tiff:
-      type: file
-      description: Convereted pyramidal ome.tiff file
-      pattern: "*.{ome.tiff,ome.tif}"
 
 authors:
   - "@BioinfoTongLI"
