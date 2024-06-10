@@ -10,13 +10,8 @@ input:
   - meta:
       type: map
       description: |
-        Groovy Map containing sample information
-        e.g. [ id:'[file stem]' ]
-  - reads:
-      type: file
-      description: |
-        An image file to be converted.
-      pattern: "*.png/tiff/tif/jpg/etc."
+        Groovy Map containing sample information and the path to the image file.
+      pattern: "[ id:'[file stem]', [path to the iamge] ]"
 output:
   - ome_tif:
       type: file
