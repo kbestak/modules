@@ -15,7 +15,7 @@
 // TODO nf-core: Optional inputs are not currently supported by Nextflow. However, using an empty
 //               list (`[]`) instead of a file can be used to work around this issue.
 
-VERSION="0.6.2"
+VERSION="vpetukhov/baysor:v0.6.2"
 
 process BIOINFOTONGLI_BAYSOR {
     tag '$spots'
@@ -27,8 +27,8 @@ process BIOINFOTONGLI_BAYSOR {
     // TODO nf-core: See section in main README for further information regarding finding and adding container addresses to the section below.
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'vpetukhov/baysor:v0.6.2':
-        'vpetukhov/baysor:v0.6.2' }"
+        "${VERSION}":
+        "${VERSION}" }"
     containerOptions "${ workflow.containerEngine == 'singularity' ? '--nv':'--gpus all --user root -d'}"
 
     input:
