@@ -1,4 +1,4 @@
-VERSION="v1.0.2"
+VERSION="v1.0.6"
 
 process BIOINFOTONGLI_MICROALIGNER {
     tag "$meta.id"
@@ -10,7 +10,7 @@ process BIOINFOTONGLI_MICROALIGNER {
         "bioinfotongli/microaligner:${VERSION}" }"
 
     input:
-    tuple val(meta), path(images)
+    tuple val(meta), path(config), path(images)
 
     output:
     tuple val(meta), path("${prefix}*_reg_result_stack.tif"), emit: registered_image
@@ -23,11 +23,9 @@ process BIOINFOTONGLI_MICROALIGNER {
     def args = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
     """
-    microaligner $args \\
-        --InputImagePaths ${images} \\
-        --OutputPrefix ${prefix} \\
-        --NumberOfWorkers ${task.cpus} \\
-        --OutputDir ./
+    microaligner --config ${config} \
+        --NumberOfWorkers ${task.cpus} \
+        $args
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
