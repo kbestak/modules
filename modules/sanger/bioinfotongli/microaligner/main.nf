@@ -3,6 +3,7 @@ VERSION="v1.0.6"
 process BIOINFOTONGLI_MICROALIGNER {
     tag "$meta.id"
     label 'process_large'
+    debug params.debug
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         "bioinfotongli/microaligner:${VERSION}" :
