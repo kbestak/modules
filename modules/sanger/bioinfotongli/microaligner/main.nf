@@ -4,10 +4,10 @@ process BIOINFOTONGLI_MICROALIGNER {
     tag "$meta.id"
     label 'process_large'
 
-    /*conda "YOUR-TOOL-HERE"*/ // Do not support this yet
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         "bioinfotongli/microaligner:${VERSION}" :
         "bioinfotongli/microaligner:${VERSION}" }"
+    publishDir params.out_dir, mode: 'copy'
 
     input:
     tuple val(meta), path(config), path(images)
