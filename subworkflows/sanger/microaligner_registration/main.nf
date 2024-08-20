@@ -1,13 +1,13 @@
 #!/usr/bin/env/ nextflow
 
- include { BIOINFOTONGLI_MICROALIGNER } from '../modules/sanger/bioinfotongli/microaligner/main'
+ include { BIOINFOTONGLI_MICROALIGNER } from '../../../modules/sanger/bioinfotongli/microaligner/main'
 
 params.referece_channel = "DAPI"
 params.reference_cycle = 1
 
 params.debug = true
 
-include { BIOINFOTONGLI_MICROALIGNER as featreg; BIOINFOTONGLI_MICROALIGNER as optreg } from '../modules/sanger/bioinfotongli/microaligner/main'
+include { BIOINFOTONGLI_MICROALIGNER as featreg; BIOINFOTONGLI_MICROALIGNER as optreg } from '../../../modules/sanger/bioinfotongli/microaligner/main'
 
 
 process GENERATE_FEAT_REG_YAML {
@@ -127,12 +127,14 @@ workflow MICRO_ALIGNER_REGISTRATION {
     images
 
     main:
-        GENERATE_FEAT_REG_YAML(images)
-        GENERATE_OPTFLOW_REG_YAML(images)
-        featreg(GENERATE_FEAT_REG_YAML.out.combine(images, by: 0))
-        ch_versions = ch_versions.mix(featreg.out.versions.first())
-        optreg(GENERATE_OPTFLOW_REG_YAML.out.combine(featreg.out.registered_image, by: 0))
-        ch_versions = ch_versions.mix(optreg.out.versions.first())
+
+    ch_versions = Channel.empty()
+    GENERATE_FEAT_REG_YAML(images)
+    GENERATE_OPTFLOW_REG_YAML(images)
+    featreg(GENERATE_FEAT_REG_YAML.out.combine(images, by: 0))
+    ch_versions = ch_versions.mix(featreg.out.versions.first())
+    optreg(GENERATE_OPTFLOW_REG_YAML.out.combine(featreg.out.registered_image, by: 0))
+    ch_versions = ch_versions.mix(optreg.out.versions.first())
 
     emit:
     image      = optreg.out.registered_image           // channel: [ val(meta), [ image ] ]
