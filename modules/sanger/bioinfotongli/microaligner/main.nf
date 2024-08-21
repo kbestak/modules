@@ -1,5 +1,7 @@
 VERSION="v1.0.6"
 
+params.debug=false
+
 process BIOINFOTONGLI_MICROALIGNER {
     tag "$meta.id"
     label 'process_large'
