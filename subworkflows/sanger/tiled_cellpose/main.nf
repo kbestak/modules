@@ -101,7 +101,7 @@ process MERGE_OUTLINES {
         "tiled_cellpose:${container_version}":
         "tiled_cellpose:${container_version}"}"
 
-    storeDir params.out_dir + "/cellpose_segmentation_outlines"
+    publishDir params.out_dir + "/cellpose_segmentation_outlines", mode: 'copy'
 
     input:
     tuple val(meta), val(cell_diameter), path(wkts)
