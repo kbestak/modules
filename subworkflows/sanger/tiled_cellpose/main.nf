@@ -62,13 +62,13 @@ process CELLPOSE {
     tuple val(meta), path("${stem}/${stem}_cp_outlines.txt"), emit: outlines, optional: true
     tuple val(meta), path("${stem}/${stem}_cp_outlines.wkt"), emit: wkts
     tuple val(meta), path("${stem}/${stem}*png"), emit: cp_plots, optional: true
-    // tuple val(stem), path("${meta.id}-${stem}/${stem}*tif"), emit: cp_out, optional: true
     path "versions.yml"           , emit: versions
 
     script:
     baseName = "${x_min}_${y_min}_${x_max}_${y_max}"
-    stem = "${meta.id}-${baseName}"
+    stem = "${meta.id}-${baseName}-diam_${cell_diameter}"
     def args = task.ext.args ?: ''  
+    meta["cellpose_diameter"] = cell_diameter
     """
     export CELLPOSE_LOCAL_MODELS_PATH=/cellpose_models
     /scripts/cellpose_seg.py run \
