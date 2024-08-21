@@ -9,6 +9,7 @@ params.debug=false
 container_version = "latest"
 
 process SLICE {
+    tag "${meta.id}"
     debug params.debug
 
     label "small_mem"
@@ -44,6 +45,7 @@ process SLICE {
 
 
 process CELLPOSE {
+    tag "${meta.id}"
     debug params.debug
 
     label "gpu"
@@ -90,6 +92,7 @@ process CELLPOSE {
 
 
 process MERGE_OUTLINES {
+    tag "${meta.id}"
     debug params.debug
 
     label "medium_mem"

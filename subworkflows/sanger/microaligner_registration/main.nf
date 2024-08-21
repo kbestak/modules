@@ -11,6 +11,8 @@ include { BIOINFOTONGLI_MICROALIGNER as MICROALIGNER_FEATREG; BIOINFOTONGLI_MICR
 
 
 process GENERATE_FEAT_REG_YAML {
+    tag "${meta.id}"
+
     publishDir params.out_dir + "/registration_configs", mode: 'copy'
 
     input:
@@ -69,6 +71,8 @@ process GENERATE_FEAT_REG_YAML {
 
 
 process GENERATE_OPTFLOW_REG_YAML {
+    tag "${meta.id}"
+
     publishDir params.out_dir + "/registration_configs", mode: 'copy'
 
     input:
