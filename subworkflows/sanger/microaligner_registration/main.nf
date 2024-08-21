@@ -7,7 +7,7 @@ params.reference_cycle = 1
 
 params.debug = true
 
-include { BIOINFOTONGLI_MICROALIGNER as featreg; BIOINFOTONGLI_MICROALIGNER as optreg } from '../../../modules/sanger/bioinfotongli/microaligner/main'
+include { BIOINFOTONGLI_MICROALIGNER as MICROALIGNER_FEATREG; BIOINFOTONGLI_MICROALIGNER as MICROALIGNER_OPTFLOWREG } from '../../../modules/sanger/bioinfotongli/microaligner/main'
 
 
 process GENERATE_FEAT_REG_YAML {
@@ -131,13 +131,13 @@ workflow MICRO_ALIGNER_REGISTRATION {
     ch_versions = Channel.empty()
     GENERATE_FEAT_REG_YAML(images)
     GENERATE_OPTFLOW_REG_YAML(images)
-    featreg(GENERATE_FEAT_REG_YAML.out.combine(images, by: 0))
-    ch_versions = ch_versions.mix(featreg.out.versions.first())
-    optreg(GENERATE_OPTFLOW_REG_YAML.out.combine(featreg.out.registered_image, by: 0))
-    ch_versions = ch_versions.mix(optreg.out.versions.first())
+    MICROALIGNER_FEATREG(GENERATE_FEAT_REG_YAML.out.combine(images, by: 0))
+    ch_versions = ch_versions.mix(MICROALIGNER_FEATREG.out.versions.first())
+    MICROALIGNER_OPTFLOWREG(GENERATE_OPTFLOW_REG_YAML.out.combine(MICROALIGNER_FEATREG.out.registered_image, by: 0))
+    ch_versions = ch_versions.mix(MICROALIGNER_OPTFLOWREG.out.versions.first())
 
     emit:
-    image      = optreg.out.registered_image           // channel: [ val(meta), [ image ] ]
+    image      = MICROALIGNER_OPTFLOWREG.out.registered_image           // channel: [ val(meta), [ image ] ]
 
     versions = ch_versions                     // channel: [ versions.yml ]
 }
