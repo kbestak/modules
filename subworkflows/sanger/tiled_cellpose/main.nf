@@ -16,7 +16,7 @@ process SLICE {
         "tiled_cellpose:${container_version}":
         "tiled_cellpose:${container_version}"}"
 
-    storeDir params.out_dir + "/slice_jsons"
+    publishDir params.out_dir + "/slice_jsons"
 
     input:
     tuple val(meta), path(file_in)
@@ -53,22 +53,21 @@ process CELLPOSE {
         "tiled_cellpose:${container_version}":
         "tiled_cellpose:${container_version}"}"
 
-    storeDir params.out_dir + "/cellpose_segmentation"
+    publishDir params.out_dir + "/cellpose_segmentation", mode: 'copy'
 
     input:
     tuple val(meta), val(x_min), val(y_min), val(x_max), val(y_max), path(image), val(cell_diameter)
 
     output:
-    tuple val(meta), path("${stem}/${stem}_cp_outlines.txt"), emit: outlines, optional: true
-    tuple val(meta), path("${stem}/${stem}_cp_outlines.wkt"), emit: wkts
-    tuple val(meta), path("${stem}/${stem}*png"), emit: cp_plots, optional: true
+    tuple val(meta), val(cell_diameter), path("${stem}/${stem}_cp_outlines.txt"), emit: outlines, optional: true
+    tuple val(meta), val(cell_diameter), path("${stem}/${stem}_cp_outlines.wkt"), emit: wkts
+    tuple val(meta), val(cell_diameter), path("${stem}/${stem}*png"), emit: cp_plots, optional: true
     path "versions.yml"           , emit: versions
 
     script:
     baseName = "${x_min}_${y_min}_${x_max}_${y_max}"
     stem = "${meta.id}-${baseName}-diam_${cell_diameter}"
     def args = task.ext.args ?: ''  
-    meta["cellpose_diameter"] = cell_diameter
     """
     export CELLPOSE_LOCAL_MODELS_PATH=/cellpose_models
     /scripts/cellpose_seg.py run \
@@ -101,18 +100,19 @@ process MERGE_OUTLINES {
     storeDir params.out_dir + "/cellpose_segmentation_outlines"
 
     input:
-    tuple val(meta), path(wkts)
+    tuple val(meta), val(cell_diameter), path(wkts)
 
     output:
-    tuple val(meta), path("${meta.id}_merged.wkt"), emit: merged_wkt
-    tuple val(meta), path("${meta.id}_merged.geojson"), emit: merged_geojson
+    tuple val(meta), val(cell_diameter), path("${stem}_merged.wkt"), emit: merged_wkt
+    tuple val(meta), val(cell_diameter), path("${stem}_merged.geojson"), emit: merged_geojson
     path "versions.yml"           , emit: versions
 
     script:
+    stem = "${meta.id}_diam-${cell_diameter}"
     def args = task.ext.args ?: ''  
     """
     /scripts/merge_wkts.py run \
-        --sample_id ${meta.id} \
+        --sample_id ${stem} \
         ${wkts} \
         ${args}
     
@@ -138,7 +138,7 @@ workflow TILED_CELLPOSE {
     CELLPOSE(images_slices)
     ch_versions = ch_versions.mix(CELLPOSE.out.versions.first())
 
-    MERGE_OUTLINES(CELLPOSE.out.wkts.groupTuple())
+    MERGE_OUTLINES(CELLPOSE.out.wkts.groupTuple(by:[0,1]))
     ch_versions = ch_versions.mix(MERGE_OUTLINES.out.versions.first())
 
     emit:
