@@ -22,7 +22,7 @@ process SLICE {
     tuple val(meta), path(file_in)
 
     output:
-    tuple val(meta), path("${stem}/slices.csv")
+    tuple val(meta), path("${stem}/slices.csv"), emit: slices_coords
     path "versions.yml"           , emit: versions
 
     script:
@@ -132,7 +132,7 @@ workflow TILED_CELLPOSE {
     SLICE(images)
     ch_versions = ch_versions.mix(SLICE.out.versions.first())
 
-    images_slices = SLICE.out.splitCsv(header:true, sep:",").map{ meta, coords ->
+    images_slices = SLICE.out.slices_coords.splitCsv(header:true, sep:",").map{ meta, coords ->
         [meta, coords.X1, coords.Y1, coords.X2, coords.Y2]
     }.combine(images, by:0).combine(channel.from(params.cell_diameters))
     CELLPOSE(images_slices)
