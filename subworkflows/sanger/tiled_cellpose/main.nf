@@ -4,6 +4,7 @@ params.images = [
 ]
 params.cell_diameters = [30, 40]
 params.cellpose_model_dir = "/lustre/scratch126/cellgen/cellgeni/tl10/cellpose_models"
+params.debug=false
 
 container_version = "latest"
 

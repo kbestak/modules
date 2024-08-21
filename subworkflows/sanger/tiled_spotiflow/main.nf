@@ -2,6 +2,8 @@
 
 container_version = "latest"
 
+params.debug=false
+
 process Spotiflow_call_peaks {
     debug params.debug
     tag "${meta.id}"
