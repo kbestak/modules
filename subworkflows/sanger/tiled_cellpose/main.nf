@@ -23,6 +23,7 @@ process SLICE {
 
     output:
     tuple val(meta), path("${stem}/slices.csv")
+    path "versions.yml"           , emit: versions
 
     script:
     stem = meta.id
@@ -62,6 +63,7 @@ process CELLPOSE {
     tuple val(meta), path("${stem}/${stem}_cp_outlines.wkt"), emit: wkts
     tuple val(meta), path("${stem}/${stem}*png"), emit: cp_plots, optional: true
     // tuple val(stem), path("${meta.id}-${stem}/${stem}*tif"), emit: cp_out, optional: true
+    path "versions.yml"           , emit: versions
 
     script:
     baseName = "${x_min}_${y_min}_${x_max}_${y_max}"
@@ -104,6 +106,7 @@ process MERGE_OUTLINES {
     output:
     tuple val(meta), path("${meta.id}_merged.wkt"), emit: merged_wkt
     tuple val(meta), path("${meta.id}_merged.geojson"), emit: merged_geojson
+    path "versions.yml"           , emit: versions
 
     script:
     def args = task.ext.args ?: ''  
