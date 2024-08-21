@@ -15,8 +15,7 @@ process Spotiflow_call_peaks {
     publishDir params.out_dir
 
     input:
-    tuple val(meta), path(img)
-    val(ch_ind)
+    tuple val(meta), path(img), val(ch_ind)
     
     output:
     tuple val(meta), path("${meta.id}_ch_${ch_ind}/ch_${ch_ind}_peaks_Y*_X*.csv"), val(ch_ind), emit: peaks
