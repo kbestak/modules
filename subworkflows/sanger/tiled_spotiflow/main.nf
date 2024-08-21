@@ -1,12 +1,16 @@
 #!/usr/bin/env/ nextflow
 
+container_version = "latest"
+
 process Spotiflow_call_peaks {
     debug params.debug
     tag "${meta.id}"
 
     label "gpu_normal"
 
-    container 'bioinfotongli/decoding:spotiflow'
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        "tiled_spotiflow:${container_version}":
+        "tiled_spotiflow:${container_version}"}"
     containerOptions "${workflow.containerEngine == 'singularity' ? '--nv':'--gpus all'}"
     publishDir params.out_dir
 
@@ -20,7 +24,7 @@ process Spotiflow_call_peaks {
     script:
     def args = task.ext.args ?: ''
     """
-    Spotiflow_call_peaks.py run \
+    /scripts/Spotiflow_call_peaks.py run \
         -image_path ${img} \
         -out_dir ${meta.id} \
         --ch_ind ${ch_ind} \
@@ -38,7 +42,9 @@ process Spotiflow_merge_peaks {
     debug params.debug
     tag "${meta.id}"
 
-    container 'bioinfotongli/decoding:spotiflow'
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        "tiled_spotiflow:${container_version}":
+        "tiled_spotiflow:${container_version}"}"
     publishDir params.out_dir
 
     input:
@@ -51,7 +57,7 @@ process Spotiflow_merge_peaks {
     script:
     def args = task.ext.args ?: ''
     """
-    Spotiflow_post_process.py run \
+    /scripts/Spotiflow_post_process.py run \
         ${csvs} \
         --ch_ind ${ch_ind} \
         --prefix ${meta.id} \
@@ -69,7 +75,9 @@ process Spotiflow_merge_channels {
     debug params.debug
     tag "${meta.id}"
 
-    container 'bioinfotongli/decoding:spotiflow'
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        "tiled_spotiflow:${container_version}":
+        "tiled_spotiflow:${container_version}"}"
     publishDir params.out_dir, mode: 'copy'
 
     input:
@@ -82,7 +90,7 @@ process Spotiflow_merge_channels {
     script:
     def args = task.ext.args ?: ''
     """
-    merge_wkts.py run \
+    /scripts/merge_wkts.py run \
         --prefix ${meta.id} \
         ${wkts} \
         ${args} \
@@ -95,7 +103,7 @@ process Spotiflow_merge_channels {
 }
 
 
-workflow Spotiflow_run {
+workflow TILED_SPOTIFLOW {
     take:
     images 
 
