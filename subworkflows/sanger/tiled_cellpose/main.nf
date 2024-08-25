@@ -47,10 +47,10 @@ process SLICE {
 process CELLPOSE {
     tag "${meta.id}"
     debug params.debug
+    cache true
 
     label "gpu"
     label "medium_mem"
-    maxForks 5
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         "tiled_cellpose:${container_version}":
