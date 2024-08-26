@@ -1,4 +1,4 @@
-process BIOINFOTONGLI_EXTRACPEAKPROFILE {
+process BIOINFOTONGLI_EXTRACTPEAKPROFILE {
     tag "$meta.id"
     label 'process_low'
 
@@ -6,6 +6,7 @@ process BIOINFOTONGLI_EXTRACPEAKPROFILE {
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'bioinfotongli/extract_peak_profile:latest':
         'bioinfotongli/extract_peak_profile:latest' }"
+    publishDir params.out_dir + "/peak_profiles/", mode: 'copy'
 
     input:
     tuple val(meta), path(image), path(peaks)
