@@ -12,7 +12,7 @@ process BIOINFOTONGLI_EXTRACPEAKPROFILE {
 
     output:
     tuple val(meta), path("${prefix}.npy"), emit: peak_profile
-    tuple val(meta), path("${prefix}.csv"), emit: peak_locations
+    tuple val(meta), path("${prefix}_locations.csv"), emit: peak_locations
     path "versions.yml"           , emit: versions
 
     when:
