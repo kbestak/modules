@@ -134,7 +134,7 @@ process Decode_peaks {
     prefix = meta.id ?: "none_decoded"
     def args = task.ext.args ?: ""
     """
-    /scripts/decode.py --spot_profile ${spot_profile} --spot_loc ${spot_loc} \\
+    /scripts/decode.py run --spot_profile ${spot_profile} --spot_loc ${spot_loc} \\
         --codebook_p ${codebook} --stem ${prefix} --chunk_size ${chunk_size} \\
         ${args}
 
