@@ -1,6 +1,5 @@
 params.debug=false
 
-include { BIOINFOTONGLI_EXTRACPEAKPROFILE } from '../modules/sanger/bioinfotongli/extracpeakprofile/main'  
 
 process Codebook_conversion {
     debug params.debug
