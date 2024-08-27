@@ -1,4 +1,5 @@
 params.debug=false
+params.chunk_size=10000
 
 
 process Codebook_conversion {
@@ -125,7 +126,7 @@ process Decode_peaks {
 
     output:
     tuple val(meta), path("${prefix}_decoded_df.tsv"), emit:decoded_peaks
-    path("${prefix}_decode_out_parameters.pickle"), optional true
+    tuple val(meta), path("${prefix}_decode_out_parameters.pickle"), optional: true
 
     path "versions.yml"           , emit: versions
 
