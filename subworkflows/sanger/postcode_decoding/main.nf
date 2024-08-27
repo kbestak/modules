@@ -121,7 +121,7 @@ process Decode_peaks {
     publishDir params.out_dir + "/decoded", mode:"copy"
 
     input:
-    tuple val(meta), file(spot_profile), file(spot_loc), file(codebook)
+    tuple val(meta), file(spot_profile), file(spot_loc), file(codebook), file(readouts)
     val(chunk_size)
 
     output:
@@ -135,7 +135,7 @@ process Decode_peaks {
     def args = task.ext.args ?: ""
     """
     /scripts/decode.py run --spot_profile_p ${spot_profile} --spot_locations_p ${spot_loc} \\
-        --codebook_p ${codebook} --stem ${prefix} --chunk_size ${chunk_size} \\
+        --codebook_p ${codebook} --stem ${prefix} --chunk_size ${chunk_size} --readouts_csv ${readouts} \\
         ${args}
 
     cat <<-END_VERSIONS > versions.yml
