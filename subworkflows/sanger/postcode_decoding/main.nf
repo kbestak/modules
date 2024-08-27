@@ -131,8 +131,11 @@ process Decode_peaks {
 
     script:
     prefix = meta.id ?: "${stem}_decoded"
+    def args = task.ext.args ?: ""
     """
-    /scripts/decode.py --spot_profile ${spot_profile} --spot_loc ${spot_loc} --codebook_p ${codebook} --stem ${prefix} --chunk_size ${chunk_size}
+    /scripts/decode.py --spot_profile ${spot_profile} --spot_loc ${spot_loc} \\
+        --codebook_p ${codebook} --stem ${prefix} --chunk_size ${chunk_size} \\
+        ${args}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
