@@ -125,12 +125,12 @@ process Decode_peaks {
 
     output:
     tuple val(meta), path("${prefix}_decoded_df.tsv"), emit:decoded_peaks
-    path("${stem}_decode_out_parameters.pickle"), optional true
+    path("${prefix}_decode_out_parameters.pickle"), optional true
 
     path "versions.yml"           , emit: versions
 
     script:
-    prefix = meta.id ?: "${stem}_decoded"
+    prefix = meta.id ?: "none_decoded"
     def args = task.ext.args ?: ""
     """
     /scripts/decode.py --spot_profile ${spot_profile} --spot_loc ${spot_loc} \\
@@ -176,14 +176,12 @@ workflow POSTCODE_DECODING_OLD {
 workflow POSTCODE_DECODING {
 
     take:
-    codebook // channel: [ val(meta), file[ codebook ] ]
-    peak_profile // channel: [ val(meta), file[ peak_profile ], file[ spot_loc] ]
+    to_decode  // channel: [ val(meta), file[ peak_profile ], file[ spot_loc], file[ codebook ] ]
 
     main:
     ch_versions = Channel.empty()
-    for_decoding = peak_profile.combine(codebook)
 
-    Decode_peaks(for_decoding, params.chunk_size)
+    Decode_peaks(to_decode, params.chunk_size)
     ch_versions = ch_versions.mix(Decode_peaks.out.versions.first())
 
     emit:
