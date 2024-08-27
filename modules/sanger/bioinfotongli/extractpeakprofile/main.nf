@@ -12,8 +12,7 @@ process BIOINFOTONGLI_EXTRACTPEAKPROFILE {
     tuple val(meta), path(image), path(peaks)
 
     output:
-    tuple val(meta), path("${prefix}.npy"), emit: peak_profile
-    tuple val(meta), path("${prefix}_locations.csv"), emit: peak_locations
+    tuple val(meta), path("${prefix}.npy"), path("${prefix}_locations.csv"), emit: peak_profile
     path "versions.yml"           , emit: versions
 
     when:
