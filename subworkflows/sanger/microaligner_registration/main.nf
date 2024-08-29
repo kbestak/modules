@@ -104,7 +104,7 @@ process GENERATE_OPTFLOW_REG_YAML {
 
     Output:
         OutputDir: "./"
-        OutputPrefix: "${meta.id}"_optflow_seg_
+        OutputPrefix: "${meta.id}"_
         SaveOutputToCycleStack: true
 
     # Registration parameters
