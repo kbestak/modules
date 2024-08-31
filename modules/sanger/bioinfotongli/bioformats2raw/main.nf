@@ -8,7 +8,7 @@ process BIOINFOTONGLI_BIOFORMATS2RAW {
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         "bioinfotongli/bioformats2raw:${VERSION}":
         "bioinfotongli/bioformats2raw:${VERSION}" }"
-    publishDir params.out_dir, mode: 'copy'
+    publishDir params.out_dir
 
     input:
     tuple val(meta), path(img)
