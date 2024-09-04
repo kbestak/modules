@@ -6,6 +6,7 @@ process TOSPATIALDATA {
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'bioinfotongli/spatialdata:latest':
         'bioinfotongli/spatialdata:latest' }"
+    publishDir params.out_dir
 
     input:
     tuple val(meta), path(xenium_input)
