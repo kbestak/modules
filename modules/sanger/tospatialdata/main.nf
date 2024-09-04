@@ -24,6 +24,7 @@ process TOSPATIALDATA {
     """
     /scripts/to_spatialdata.py run \\
         --xenium_input ${xenium_input} \\
+        --out_name ${sdata_out} \\
         $args
 
     cat <<-END_VERSIONS > versions.yml
