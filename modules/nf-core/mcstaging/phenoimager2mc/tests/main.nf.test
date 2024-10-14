@@ -9,19 +9,26 @@ nextflow_process {
     tag "modules_nfcore"
     tag "mcstaging"
     tag "mcstaging/phenoimager2mc"
+    tag "untar"
+
+    setup {
+
+        run("UNTAR") {
+            script "../../../../../modules/nf-core/untar/main.nf"
+                process {
+                    """
+                        input[0] = [[id:'test'], file(params.modules_testdata_base_path + "imaging/staging/phenoimager/tiles.tar.gz", checkIfExists: true) ]
+                    """
+                }
+        }
+    }
 
     test("phenoimager2mc - tif") {
         when {
             process {
                 """
                 // define inputs of the process here. Example:
-                input[0] = [
-                    [ id:'test' ],
-                    [
-                        file(params.modules_testdata_base_path + 'imaging/staging/phenoimager/tile1.tif', checkIfExists: true),
-                        file(params.modules_testdata_base_path + 'imaging/staging/phenoimager/tile2.tif', checkIfExists: true)
-                    ]
-                ]
+                input[0] = UNTAR.out.untar
                 """
             }
         }
@@ -43,13 +50,7 @@ test("phenoimager2mc - tif - stub") {
             process {
                 """
                 // define inputs of the process here. Example:
-                input[0] = [
-                    [ id:'test' ],
-                    [
-                        file(params.modules_testdata_base_path + 'imaging/staging/phenoimager/tile1.tif', checkIfExists: true),
-                        file(params.modules_testdata_base_path + 'imaging/staging/phenoimager/tile2.tif', checkIfExists: true)
-                    ]
-                ]
+                input[0] = UNTAR.out.untar
                 """
             }
         }

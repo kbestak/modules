@@ -1,11 +1,11 @@
 process MCSTAGING_PHENOIMAGER2MC {
-    tag "$meta.id"
+    tag   "$meta.id"
     label 'process_single'
 
     container "ghcr.io/schapirolabor/phenoimager2mc:v0.2.2"
 
     input:
-    tuple val(meta) , path(tiles, stageAs: "tiles/*")
+    tuple val(meta) , path(tiles_dir, stageAs: "tiles/")
 
     output:
     tuple val(meta), path("*.tif"), emit: tif
@@ -25,7 +25,7 @@ process MCSTAGING_PHENOIMAGER2MC {
 
     """
     python /phenoimager2mc/scripts/phenoimager2mc.py \
-        -i ${tiles} \
+        -i ${tiles_dir} \
         -o "${prefix}.tif" \
         $args
 
@@ -42,7 +42,6 @@ process MCSTAGING_PHENOIMAGER2MC {
     }
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    touch input
     touch "${prefix}.tif"
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
