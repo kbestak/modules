@@ -203,6 +203,8 @@ workflow TILED_SEGMENTATION {
         STARDIST(images_tiles)
         wkts = STARDIST.out.wkts.groupTuple(by:[0,1])
         ch_versions = ch_versions.mix(STARDIST.out.versions.first())
+    } else {
+        error "Invalid segmentation method: ${method}"
     }
     MERGE_OUTLINES(wkts)
     ch_versions = ch_versions.mix(MERGE_OUTLINES.out.versions.first())
