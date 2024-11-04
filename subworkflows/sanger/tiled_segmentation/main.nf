@@ -25,7 +25,7 @@ process GENERATE_TILE_COORDS {
     tuple val(meta), path(file_in)
 
     output:
-    tuple val(meta), path("${stem}/slices.csv"), emit: slices_coords
+    tuple val(meta), path("${stem}/slices.csv"), emit: tile_coords
     path "versions.yml"           , emit: versions
 
     script:
