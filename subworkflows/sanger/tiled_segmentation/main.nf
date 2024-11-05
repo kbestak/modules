@@ -1,4 +1,4 @@
-include { BIOINFOTONGLI_CELLPOSE as CELLPOSE } from '../modules/sanger/bioinfotongli/cellpose/main'
+include { BIOINFOTONGLI_CELLPOSE as CELLPOSE } from '../../../modules/sanger/bioinfotongli/cellpose/main'
 
 params.images = [
     [["id":"test1"], "file1"],
