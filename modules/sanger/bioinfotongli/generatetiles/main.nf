@@ -1,7 +1,7 @@
 container_version = "latest"
 params.debug = false
 
-process GENERATE_TILE_COORDS {
+process BIOINFOTONGLI_GENERATETILES {
     tag "${meta.id}"
     debug params.debug
 
