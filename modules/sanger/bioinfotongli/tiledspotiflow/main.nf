@@ -23,7 +23,7 @@ process BIOINFOTONGLI_TILEDSPOTIFLOW {
     tuple val(meta), val(x_min), val(y_min), val(x_max), val(y_max), path(image), val(ch_ind)
     
     output:
-    tuple val(meta), path("${out_dir}/${out_name}"), val(ch_ind), emit: peaks
+    tuple val(meta), val(ch_ind), path("${out_dir}/${out_name}"), emit: peaks
     path "versions.yml"           , emit: versions
 
     script:

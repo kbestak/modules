@@ -92,13 +92,13 @@ workflow TILED_SPOTIFLOW {
     BIOINFOTONGLI_TILEDSPOTIFLOW(images_tiles.combine(images, by:0).combine(chs_to_call_peaks))
     ch_versions = ch_versions.mix(BIOINFOTONGLI_TILEDSPOTIFLOW.out.versions.first())
 
-    // Spotiflow_merge_peaks(Spotiflow_call_peaks.out.peaks)
-    // ch_versions = ch_versions.mix(Spotiflow_merge_peaks.out.versions.first())
+    Spotiflow_merge_peaks(BIOINFOTONGLI_TILEDSPOTIFLOW.out.peaks.groupTuple(by:[0,1]))
+    ch_versions = ch_versions.mix(Spotiflow_merge_peaks.out.versions.first())
 
-    // Spotiflow_merge_channels(Spotiflow_merge_peaks.out.merged_peaks.groupTuple())
-    // ch_versions = ch_versions.mix(Spotiflow_merge_channels.out.versions.first())
+    Spotiflow_merge_channels(Spotiflow_merge_peaks.out.merged_peaks.groupTuple())
+    ch_versions = ch_versions.mix(Spotiflow_merge_channels.out.versions.first())
 
-    // emit:
-    // spots_csv       = Spotiflow_merge_channels.out.merged_channels
-    // versions        = ch_versions
+    emit:
+    spots_csv       = Spotiflow_merge_channels.out.merged_channels
+    versions        = ch_versions
 }
