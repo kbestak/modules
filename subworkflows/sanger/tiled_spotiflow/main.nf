@@ -1,5 +1,6 @@
 #!/usr/bin/env/ nextflow
 include { BIOINFOTONGLI_GENERATETILES as GENERATE_TILE_COORDS } from '../../../modules/sanger/bioinfotongli/generatetiles/main'
+include { BIOINFOTONGLI_TILEDSPOTIFLOW } from '../../../modules/sanger/bioinfotongli/tiledspotiflow/main'
 
 container_version = "latest"
 
@@ -88,8 +89,8 @@ workflow TILED_SPOTIFLOW {
         [meta, coords.X_MIN, coords.Y_MIN, coords.X_MAX, coords.Y_MAX]
     }
 
-    Spotiflow_call_peaks(images_tiles.combine(images, by:0).combine(chs_to_call_peaks))
-    ch_versions = ch_versions.mix(Spotiflow_call_peaks.out.versions.first())
+    BIOINFOTONGLI_TILEDSPOTIFLOW(images_tiles.combine(images, by:0).combine(chs_to_call_peaks))
+    ch_versions = ch_versions.mix(BIOINFOTONGLI_TILEDSPOTIFLOW.out.versions.first())
 
     // Spotiflow_merge_peaks(Spotiflow_call_peaks.out.peaks)
     // ch_versions = ch_versions.mix(Spotiflow_merge_peaks.out.versions.first())
