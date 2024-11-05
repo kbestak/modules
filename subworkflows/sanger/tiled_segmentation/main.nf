@@ -1,5 +1,5 @@
 include { BIOINFOTONGLI_CELLPOSE as CELLPOSE } from '../../../modules/sanger/bioinfotongli/cellpose/main'
-include { GENERATE_TILE_COORDS } from '../../../modules/sanger/bioinfotongli/generatetiles/main'
+include { BIOINFOTONGLI_GENERATE_TILE_COORDS as GENERATE_TILE_COORDS } from '../../../modules/sanger/bioinfotongli/generatetiles/main'
 
 params.images = [
     [["id":"test1"], "file1"],
