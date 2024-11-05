@@ -1,3 +1,4 @@
+container_version = "latest"
 
 process BIOINFOTONGLI_CELLPOSE {
     tag "${meta.id}"
