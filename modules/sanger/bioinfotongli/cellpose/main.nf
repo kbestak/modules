@@ -1,4 +1,6 @@
 container_version = "latest"
+params.debug = false
+params.cellpose_model_dir = "./"
 
 process BIOINFOTONGLI_CELLPOSE {
     tag "${meta.id}"
