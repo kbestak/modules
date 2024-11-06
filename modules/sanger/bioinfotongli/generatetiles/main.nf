@@ -25,7 +25,7 @@ process BIOINFOTONGLI_GENERATETILES {
     out_name = "tile_coords.csv"
     def args = task.ext.args ?: ''  
     """
-    python /scripts/tile_2D_image.py run \\
+    python /opt/scripts/tile_2D_image.py run \\
         --image ${file_in} \\
         --out_dir "${stem}" \\
         --out_name "${out_name}" \\
