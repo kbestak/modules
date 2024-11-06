@@ -8,8 +8,8 @@ process BIOINFOTONGLI_GENERATETILES {
     label "small_mem"
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        "quay.io/bioinfotongli/tiled_cellpose:${container_version}":
-        "quay.io/bioinfotongli/tiled_cellpose:${container_version}"}"
+        "quay.io/bioinfotongli/large_image_io:${container_version}":
+        "quay.io/bioinfotongli/large_image_io:${container_version}"}"
 
     publishDir params.out_dir + "/tile_coords"
 
