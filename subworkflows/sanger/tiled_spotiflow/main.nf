@@ -20,7 +20,7 @@ process Spotiflow_merge_tiled_peaks {
     publishDir params.out_dir + "/spotiflow_peaks"
 
     input:
-    tuple val(meta), path(csvs), val(ch_ind)
+    tuple val(meta), val(ch_ind), path(csvs)
 
     output:
     tuple val(meta), path("${meta.id}_merged_peaks_ch_${ch_ind}.wkt"), emit: merged_peaks
