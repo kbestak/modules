@@ -14,8 +14,8 @@ process BIOINFOTONGLI_CELLPOSE {
         "quay.io/bioinfotongli/tiled_cellpose:${container_version}":
         "quay.io/bioinfotongli/tiled_cellpose:${container_version}"}"
     containerOptions = {
-            workflow.containerEngine == "singularity" ? "--cleanenv --nv -B ${params.cellpose_model_dir}:/tmp/cellpose_models -B ${params.NUMBA_CACHE_DIR}:/tmp/numba_cache":
-            ( workflow.containerEngine == "docker" ? "--gpus all -v ${params.cellpose_model_dir}:/tmp/cellpose_models": null )
+            workflow.containerEngine == "singularity" ? "--cleanenv --nv -B ${params.cellpose_model_dir}:${task.workDir}/cellpose_models -B ${params.NUMBA_CACHE_DIR}:${task.workDir}/numba_cache":
+            ( workflow.containerEngine == "docker" ? "--gpus all -v ${params.cellpose_model_dir}:${task.workDir}/cellpose_models": null )
     }
 
     publishDir params.out_dir + "/naive_cellpose_segmentation"
