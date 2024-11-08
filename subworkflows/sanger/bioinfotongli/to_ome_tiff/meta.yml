@@ -1,0 +1,25 @@
+name: to_ome_tiff
+description: Convert any image format to ome.tiff
+keywords:
+  - microscopy
+  - conversion
+modules:
+  - bioinfotongli/raw2ometiff
+  - bioinfotongli/bioformats2raw
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information and the path to the image file.
+      pattern: "[ id:'[file stem]', [path to the iamge] ]"
+output:
+  - ome_tif:
+      type: file
+      description: converted image file
+      pattern: "*.ome_tif"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+authors:
+  - "@bioinfotongli"

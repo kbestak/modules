@@ -1,0 +1,56 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
+name: "bioinfotongli_assignspots2d"
+description: Assign transcripts to spots in 2D space
+keywords:
+  - transcripts
+  - label image
+  - segmentation
+  - 2D
+tools:
+  - "bioinfotongli":
+      description: ""
+      homepage: ""
+      documentation: ""
+      tool_dev_url: ""
+      doi: ""
+      licence: 
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'sample1']`
+  
+  - peaks:
+      type: file
+      description: file contains peak locations/class
+      pattern: "*.{csv/tsv/wkt}"
+
+  - label_2d:
+      type: file
+      description: A 2D segmentation label image
+      pattern: "*.{tif/tiff}"
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'sample1']`
+  
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+  - count_matrix:
+      type: file
+      description: A file contains the count matrix
+      pattern: "*.{csv}"
+
+authors:
+  - "@BioinfoTongLI"
+maintainers:
+  - "@BioinfoTongLI"

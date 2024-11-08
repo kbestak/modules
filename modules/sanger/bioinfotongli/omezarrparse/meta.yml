@@ -1,0 +1,49 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
+name: "bioinfotongli_omezarrparse"
+description: a script to parse useful metadata from ome-zarr files and generate a json
+keywords:
+  - ome-zarr
+  - image-processing
+  - metadata-parsing
+tools:
+  - "bioinfotongli":
+      description: ""
+      homepage: ""
+      documentation: ""
+      tool_dev_url: ""
+      doi: ""
+      licence: 
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'file basename', ]`
+  
+  - ome_zarr_root:
+      type: file
+      description: root of the ome-zarr file
+      pattern: "*.zarr"
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'file basename', ]`
+  
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+  - params_in_json:
+      type: file
+      description: The parameters in json format that will be parsed by the next step
+      pattern: "*.json"
+
+authors:
+  - "@BioinfoTongLI"
+maintainers:
+  - "@BioinfoTongLI"

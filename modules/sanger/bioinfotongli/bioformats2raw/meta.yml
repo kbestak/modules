@@ -1,0 +1,33 @@
+name: "bioinfotongli_bioformats2raw"
+description: Java application to convert image file formats, including .mrxs, to an intermediate Zarr structure.
+keywords:
+  - bioimage
+  - conversion
+  - image_format
+tools:
+  - "bioinfotongli":
+      description: "Modules that are reusable for daily bioimage analysis"
+      homepage: ""
+      documentation: ""
+      tool_dev_url: ""
+      doi: ""
+      licence: ""
+
+input:
+  - img:
+      type: list
+      description: Any image file supported by bioformats2raw, along with the meta information
+      pattern: "[ meta, *.{tif,tiff,png,jpg,ndpi} ]"
+
+output:
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+  - zarr:
+      type: list
+      description: input image in converted to zarr folder along with the meta information
+      pattern: "[ meta, *.{zarr} ]"
+
+authors:
+  - "@BioinfoTongLI"

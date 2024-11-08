@@ -1,0 +1,50 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
+name: "tospatialdata"
+description: A wrapper of SpaitalData package to transform spatial data
+keywords:
+  - spatial data
+  - spatial transcriptomics
+  - ETL
+  - data transformation
+tools:
+  - "tospatialdata":
+      description: ""
+      homepage: ""
+      documentation: ""
+      tool_dev_url: ""
+      doi: ""
+      licence: 
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'sample1']`
+  
+  - xenium_inpu:
+      type: file
+      description: a xenium input folder/zip file
+      pattern: "*.{zip/folder}"
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'sample1']`
+  
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+  - sdata:
+      type: file
+      description: xenium output folder in spatial data format
+      pattern: "*.{sdata}"
+
+authors:
+  - "@BioinfoTongLI"
+maintainers:
+  - "@BioinfoTongLI"

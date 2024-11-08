@@ -1,0 +1,41 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
+name: "bioinfotongli_baysor"
+## TODO nf-core: Add a description of the module and list keywords
+description: write your description here
+keywords:
+  - cell segmentation
+  - image analysis 
+  - spatial transcriptomics
+tools:
+  - "bioinfotongli":
+      ## TODO nf-core: Add a description and other details for the software below
+      description: ""
+      homepage: ""
+      documentation: ""
+      tool_dev_url: ""
+      doi: ""
+      licence: 
+
+input:
+  #
+  ## TODO nf-core: Delete / customise this example input
+  - spot:
+      type: file
+      description: CSV file containing decoded RNA spots
+      pattern: "*.{csv,tsv}"
+
+output:
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+  - segmentation:
+      type: file
+      description: segmentation output
+      pattern: "*.csv"
+
+authors:
+  - "@BioinfoTongLI"
+maintainers:
+  - "@BioinfoTongLI"

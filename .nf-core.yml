@@ -1,5 +1,5 @@
 repository_type: modules
-org_path: nf-core
+org_path: sanger
 bump-versions:
   rseqc/junctionannotation: False
   rseqc/bamstat: False

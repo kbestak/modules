@@ -1,0 +1,15 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/environment-schema.json
+name: "tospatialdata"
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - numpy=2.1.0
+  - pip
+  - pip:
+      - fire==0.6.0
+      - spatialdata==0.2.2
+      - shapely==2.0.3
+      - spatialdata-io==0.1.4
