@@ -1,4 +1,4 @@
-container_version = "0.1.0"
+container_version = "0.1.1"
 params.debug = false
 params.cellpose_model_dir = "./"
 
