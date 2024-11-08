@@ -33,8 +33,8 @@ process BIOINFOTONGLI_CELLPOSE {
     stem = "${meta.id}-${x_min}_${y_min}_${x_max}_${y_max}-diam_${cell_diameter}"
     def args = task.ext.args ?: ''  
     """
-    export CELLPOSE_LOCAL_MODELS_PATH=/tmp/cellpose_models
-    export NUMBA_CACHE_DIR=/tmp/numba_cache
+    export CELLPOSE_LOCAL_MODELS_PATH=${task.workDir}/cellpose_models
+    export NUMBA_CACHE_DIR=${task.workDir}/numba_cache
     /opt/conda/bin/python /scripts/cellpose_seg.py run \
         --image ${image} \
         --x_min ${x_min} \
