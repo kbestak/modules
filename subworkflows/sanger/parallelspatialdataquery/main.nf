@@ -20,7 +20,7 @@ process GENERATE_POLYGON_INDEXES {
     publishDir params.out_dir + "/spatialdata_polygon_indexes"
 
     input:
-    tuple val(meta), val(sdata)
+    tuple val(meta), file(sdata)
 
     output:
     tuple val(meta), path("${meta.id}/*.json"), emit: polygon_indexes
@@ -55,7 +55,7 @@ process CROP_SPATIALDATA {
     publishDir params.out_dir + "/spatialdata_polygon_indexes"
 
     input:
-    tuple val(meta), val(sdata), val(index_json)
+    tuple val(meta), path(sdata), path(index_json)
 
     output:
     tuple val(meta), path("${meta.id}/*.sdata"), emit: cropped_sdatas
@@ -66,7 +66,7 @@ process CROP_SPATIALDATA {
     """
     /opt/conda/bin/python /scripts/crop.py run \
         --sdata ${sdata} \
-        --index_json ${index_jsond} \
+        --index_json ${index_json} \
         --out_name ${meta.id} \
         ${args}
     
@@ -78,16 +78,21 @@ process CROP_SPATIALDATA {
 }
 
 
-workflow TILED_SEGMENTATION {
+workflow PARALLELSPATIALDATAQUERY {
     take:
     spatialdatas 
 
     main:
     ch_versions = Channel.empty()
-    GENERATE_POLYGON_INDEXES(channel.from(images))
+    GENERATE_POLYGON_INDEXES(spatialdatas)
     ch_versions = ch_versions.mix(GENERATE_POLYGON_INDEXES.out.versions.first())
 
-    CROP_SPATIALDATA(images.combine(GENERATE_POLYGON_INDEXES.out.polygon_indexes))
+    for_cropping = spatialdatas.combine(GENERATE_POLYGON_INDEXES.out.polygon_indexes, by:0)
+        .flatMap { meta, zarr, jsons ->
+            jsons.collect { json -> [meta, zarr, json] }
+        }
+    
+    CROP_SPATIALDATA(for_cropping)
     ch_versions = ch_versions.mix(CROP_SPATIALDATA.out.versions.first())
 
     emit:
