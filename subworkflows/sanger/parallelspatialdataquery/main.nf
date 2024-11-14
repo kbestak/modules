@@ -89,7 +89,11 @@ workflow PARALLELSPATIALDATAQUERY {
 
     for_cropping = spatialdatas.combine(GENERATE_POLYGON_INDEXES.out.polygon_indexes, by:0)
         .flatMap { meta, zarr, jsons ->
-            jsons.collect { json -> [meta, zarr, json] }
+            if (jsons instanceof List) {
+                jsons.collect { json -> [meta, zarr, json] }
+            } else {
+                [[meta, zarr, jsons]]
+            }
         }
     
     CROP_SPATIALDATA(for_cropping)
