@@ -52,7 +52,7 @@ process CROP_SPATIALDATA {
         "quay.io/bioinfotongli/spatialdata:${container_version}":
         "quay.io/bioinfotongli/spatialdata:${container_version}"}"
 
-    publishDir params.out_dir + "/spatialdata_polygon_indexes"
+    publishDir params.out_dir + "/cropped_spatialdata"
 
     input:
     tuple val(meta), path(sdata), path(index_json)
