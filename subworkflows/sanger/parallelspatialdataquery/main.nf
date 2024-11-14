@@ -20,7 +20,7 @@ process GENERATE_POLYGON_INDEXES {
     publishDir params.out_dir + "/spatialdata_polygon_indexes"
 
     input:
-    tuple val(meta), file(sdata)
+    tuple val(meta), path(sdata)
 
     output:
     tuple val(meta), path("${meta.id}/*.json"), emit: polygon_indexes
