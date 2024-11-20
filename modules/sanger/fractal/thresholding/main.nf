@@ -1,6 +1,6 @@
 container_version = "0.0.1"
 
-process BIOINFOTONGLI_THRESHOLDING {
+process FRACTAL_THRESHOLDING {
     tag "$meta.id"
     label 'process_low'
 
