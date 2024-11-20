@@ -6,8 +6,8 @@ process FRACTAL_THRESHOLDING {
 
     // conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        "quay.io/bioinfotongli/ome-zarr-nextflow-minimum:${container_version}":
-        "quay.io/bioinfotongli/ome-zarr-nextflow-minimum:${container_version}" }"
+        "quay.io/bioinfotongli/hcs_fractal:${container_version}":
+        "quay.io/bioinfotongli/hcs_fractal:${container_version}" }"
     publishDir params.out_dir + "/thresholding_segmentation/"
 
     input:
@@ -23,21 +23,22 @@ process FRACTAL_THRESHOLDING {
     script:
     def args = task.ext.args ?: ''
     """
-    json_content='{
-        "threshold": 5,
-        "label_name": "threshold",
-        "channel_name": "DAPI"
-    }'
+    echo '
+    {
+        "threshold": ${threshold},
+        "label_name": "${label_name}",
+        "channel": {
+            "label": "${channel_name}"
+        },
+        "zarr_url": "${ome_zarr}"
+    }' > input.json
+    /opt/conda/bin/python /opt/scripts/thresholding_label_task.py --args-json input.json $args --out-json dummy.json
 
-    echo "$json_content" > input.json
-    ls
-    python /scripts/thresholding_label_task.py --args-json input.json $args
-
-    cat <<-END_VERSIONS > ${omezarr_root}/${label_name}
+    #cat <<-END_VERSIONS > ${ome_zarr}/${label_name}
+    cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        thresholding: \$(echo \$(/scripts/thresholding_label_task.py version 2>&1 | sed 's/^.*thresholding_label_task.py //; s/Using.*\$//' ))
+        thresholding: \$(echo \$(/opt//scripts/thresholding_label_task.py version 2>&1 | sed 's/^.*thresholding_label_task.py //; s/Using.*\$//' ))
         timestamp: \$(date)
-        modified_path: $omezarr_root/Features.csv
     END_VERSIONS
     """
 
@@ -46,7 +47,8 @@ process FRACTAL_THRESHOLDING {
     """
     touch ${ome_zarr}/images/${label_name}.npy
 
-    cat <<-END_VERSIONS > ${omezarr_root}/${label_name}
+    #cat <<-END_VERSIONS > ${omezarr_root}/${label_name}
+    cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         thresholding: \$(echo \$(/scripts/thresholding_label_task.py version 2>&1 | sed 's/^.*thresholding_label_task.py //; s/Using.*\$//' ))
         timestamp: \$(date)
