@@ -26,11 +26,11 @@ process FRACTAL_CELLPOSE {
     """
     echo '
     {
-        "level": ${level},
+        "level": "${level}",
         "channel": {
             "label": "${channel_name}"
         },
-        "zarr_url": "${ome_zarr}"
+        "zarr_url": "${ome_zarr}",
         "output_label_name": "${label_name}"
     }' > input.json
     /opt/conda/bin/python /opt/conda/lib/python3.11/site-packages/fractal_tasks_core/tasks/cellpose_segmentation.py --args-json input.json $args --out-json dummy.json
