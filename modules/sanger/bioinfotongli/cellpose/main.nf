@@ -1,21 +1,15 @@
-container_version = "0.1.1"
-params.debug = false
-params.cellpose_model_dir = "./"
-
 process BIOINFOTONGLI_CELLPOSE {
     tag "${meta.id}"
-    debug params.debug
-    cache true
 
     label "gpu"
     label "medium_mem"
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        "quay.io/bioinfotongli/tiled_cellpose:${container_version}":
-        "quay.io/bioinfotongli/tiled_cellpose:${container_version}"}"
+        "quay.io/cellgeni/tiled_cellpose:0.1.1":
+        "quay.io/cellgeni/tiled_cellpose:0.1.1"}"
     containerOptions = {
-            workflow.containerEngine == "singularity" ? "--cleanenv --nv -B ${params.cellpose_model_dir}:/models/cellpose_models -B ${params.NUMBA_CACHE_DIR}:/models/numba_cache":
-            ( workflow.containerEngine == "docker" ? "--gpus all -v ${params.cellpose_model_dir}:/models/cellpose_models -v ${params.NUMBA_CACHE_DIR}:/models/numba_cache": null )
+            workflow.containerEngine == "singularity" ? "--cleanenv --nv":
+            ( workflow.containerEngine == "docker" ? "--gpus all": null )
     }
 
     publishDir params.out_dir + "/naive_cellpose_segmentation"
@@ -33,9 +27,7 @@ process BIOINFOTONGLI_CELLPOSE {
     stem = "${meta.id}-${x_min}_${y_min}_${x_max}_${y_max}-diam_${cell_diameter}"
     def args = task.ext.args ?: ''  
     """
-    export CELLPOSE_LOCAL_MODELS_PATH=/models/cellpose_models
-    export NUMBA_CACHE_DIR=/models/numba_cache
-    /opt/conda/bin/python /scripts/cellpose_seg.py run \
+    cellpose_seg.py run \
         --image ${image} \
         --x_min ${x_min} \
         --y_min ${y_min} \
