@@ -1,17 +1,12 @@
-container_version = "0.5.1"
-
-params.debug = false
-
 process BIOINFOTONGLI_TILEDSPOTIFLOW {
-    debug params.debug
     tag "${meta.id}"
 
     label "gpu"
     label "process_medium"
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        "quay.io/bioinfotongli/tiled_spotiflow:${container_version}":
-        "quay.io/bioinfotongli/tiled_spotiflow:${container_version}"}"
+        "quay.io/bioinfotongli/tiled_spotiflow:0.5.1":
+        "quay.io/bioinfotongli/tiled_spotiflow:0.5.1"}"
     containerOptions = {
         workflow.containerEngine == "singularity" ? "--cleanenv --nv":
         ( workflow.containerEngine == "docker" ? "--gpus all": null )
