@@ -1,20 +1,16 @@
-container_version = "0.0.2"
-params.debug = false
-
 process BIOINFOTONGLI_GENERATETILES {
     tag "${meta.id}"
-    debug params.debug
 
     label "small_mem"
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        "quay.io/bioinfotongli/large_image_io:${container_version}":
-        "quay.io/bioinfotongli/large_image_io:${container_version}"}"
+        "quay.io/bioinfotongli/large_image_io:0.0.2":
+        "quay.io/bioinfotongli/large_image_io:0.0.2"}"
 
     publishDir params.out_dir + "/tile_coords"
 
     input:
-    tuple val(meta), path(file_in)
+    tuple val(meta), path(image)
 
     output:
     tuple val(meta), path("${stem}/${out_name}"), emit: tile_coords
@@ -25,15 +21,15 @@ process BIOINFOTONGLI_GENERATETILES {
     out_name = "tile_coords.csv"
     def args = task.ext.args ?: ''  
     """
-    /usr/local/bin/python /opt/scripts/tile_2D_image.py run \\
-        --image ${file_in} \\
+    tile_2D_image.py run \\
+        --image ${image} \\
         --out_dir "${stem}" \\
         --out_name "${out_name}" \\
         ${args}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        : \$(echo \$(/usr/local/bin/python /scripts/tile_2D_image.py version 2>&1) | sed 's/^.*tile_2D_image.py //; s/Using.*\$//' ))
+        : \$(echo \$(tile_2D_image.py version))
     END_VERSIONS
     """
 }
