@@ -1,0 +1,62 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
+name: "fractal_cellpose"
+description: write your description here
+keywords:
+  - segmentation
+  - fractal
+  - demo
+tools:
+  - "fractal":
+      description: "A simple wrapper of cellpose segmentation from Fractal framework"
+      homepage: "https://fractal-analytics-platform.github.io/"
+      documentation: "https://fractal-analytics-platform.github.io/"
+      tool_dev_url: ""
+      doi: ""
+      licence: BSD-3-Clause
+      identifier: 
+
+input:
+  - - meta:
+        type: map
+        description: |
+          Groovy Map containing sample information
+          e.g. `[ id:'sample1']`
+    - ome-zarr:
+        type: file
+        description: (multi-channel) ome-zarr file
+        pattern: "*.{zarr,ome.zarr}"
+    - level:
+        type: int
+        description: the level of the pyramid to segment
+        pattern: "0,1,2"
+    - channel-name: 
+        type: str
+        description: the channel name to segment
+        pattern: "DAPI, Hoescht"
+    - label-name:
+        type: str
+        description: the output label name
+        pattern: "segmented DAPI"
+output:
+  - out:
+    - meta:
+        type: map
+        description: |
+          Groovy Map containing sample information
+          e.g. `[ id:'sample1' ]`
+    - '*labels/${label_name}':
+        type: file
+        description: the path to the segmented label image
+        pattern: "*.{label}"
+          
+  - versions:
+    - "versions.yml":
+        type: file
+        description: File containing software versions
+        pattern: "versions.yml"
+
+authors:
+  - "@BioinfoTongLI"
+maintainers:
+  - "@BioinfoTongLI"
