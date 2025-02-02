@@ -1,26 +1,15 @@
 include { BIOINFOTONGLI_CELLPOSE as CELLPOSE } from '../../../modules/sanger/bioinfotongli/cellpose/main'
 include { BIOINFOTONGLI_GENERATETILES as GENERATE_TILE_COORDS } from '../../../modules/sanger/bioinfotongli/generatetiles/main'
 
-params.images = [
-    [["id":"test1"], "file1"],
-    [["id":"test2"], "file2"],
-]
-params.cell_diameters = [30, 40]
-params.cellpose_model_dir = "/lustre/scratch126/cellgen/cellgeni/tl10/cellpose_models"
-params.debug=false
-
-container_version = "0.1.0"
-
 
 process MERGE_OUTLINES {
     tag "${meta.id}"
-    debug params.debug
 
     label "medium_mem"
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        "quay.io/bioinfotongli/tiled_cellpose:${container_version}":
-        "quay.io/bioinfotongli/tiled_cellpose:${container_version}"}"
+        "quay.io/bioinfotongli/tiled_cellpose:0.1.0":
+        "quay.io/bioinfotongli/tiled_cellpose:0.1.0"}"
 
     publishDir params.out_dir + "/cellpose_segmentation_merged_wkt"
 
@@ -36,7 +25,7 @@ process MERGE_OUTLINES {
     stem = "${meta.id}_diam-${cell_diameter}"
     def args = task.ext.args ?: ''  
     """
-    /opt/conda/bin/python /scripts/merge_wkts.py run \
+    merge_wkts.py run \
         --sample_id "${stem}" \
         ${wkts} \
         ${args}
