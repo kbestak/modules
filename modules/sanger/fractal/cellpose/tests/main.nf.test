@@ -1,0 +1,60 @@
+// TODO nf-core: Once you have added the required tests, please run the following command to build this file:
+// nf-core modules test fractal/cellpose
+nextflow_process {
+
+    name "Test Process FRACTAL_CELLPOSE"
+    script "../main.nf"
+    process "FRACTAL_CELLPOSE"
+
+    tag "modules"
+    tag "modules_sanger"
+    tag "fractal"
+    tag "fractal/cellpose"
+
+    test("mouse_heart - tif") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test'], // meta map
+                    file(params.modules_testdata_base_path + 'imaging/tiff/mindagap.mouse_heart.wga.wkt', checkIfExists: true),
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("mouse_heart - tif - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test'], // meta map
+                    file(params.modules_testdata_base_path + 'imaging/tiff/mindagap.mouse_heart.wga.wkt', checkIfExists: true),
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+}
