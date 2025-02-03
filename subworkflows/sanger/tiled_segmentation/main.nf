@@ -1,42 +1,7 @@
 include { BIOINFOTONGLI_CELLPOSE as CELLPOSE } from '../../../modules/sanger/bioinfotongli/cellpose/main'
-include { BIOINFOTONGLI_STARDIST as STARDIST} from '../../..//modules/sanger/bioinfotongli/stardist/main'
+include { BIOINFOTONGLI_STARDIST as STARDIST} from '../../../modules/sanger/bioinfotongli/stardist/main'
+include { MERGEOUTLINES} from '../../../modules/sanger/mergeoutlines/main'
 include { BIOINFOTONGLI_GENERATETILES as GENERATE_TILE_COORDS } from '../../../modules/sanger/bioinfotongli/generatetiles/main'
-
-
-process MERGE_OUTLINES {
-    tag "${meta.id}"
-
-    label "medium_mem"
-
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        "quay.io/bioinfotongli/tiled_cellpose:0.1.0":
-        "quay.io/bioinfotongli/tiled_cellpose:0.1.0"}"
-
-    publishDir params.out_dir + "/cellpose_segmentation_merged_wkt"
-
-    input:
-    tuple val(meta), val(cell_diameter), path(wkts)
-
-    output:
-    tuple val(meta), val(cell_diameter), path("${stem}_merged.wkt"), emit: merged_wkt
-    tuple val(meta), val(cell_diameter), path("${stem}_merged.geojson"), emit: merged_geojson
-    path "versions.yml"           , emit: versions
-
-    script:
-    stem = "${meta.id}_diam-${cell_diameter}"
-    def args = task.ext.args ?: ''  
-    """
-    merge_wkts.py run \
-        --sample_id "${stem}" \
-        ${wkts} \
-        ${args}
-    
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        : \$(echo \$(/scripts/merge_wkts.py version 2>&1) | sed 's/^.*merge_wkts.py //; s/Using.*\$//' ))
-    END_VERSIONS
-    """
-}
 
 
 workflow TILED_SEGMENTATION {
@@ -64,10 +29,10 @@ workflow TILED_SEGMENTATION {
     } else {
         error "Invalid segmentation method: ${method}"
     }
-    MERGE_OUTLINES(wkts)
-    ch_versions = ch_versions.mix(MERGE_OUTLINES.out.versions.first())
+    MERGEOUTLINES(wkts)
+    ch_versions = ch_versions.mix(MERGEOUTLINES.out.versions.first())
 
     emit:
-    wkt         = MERGE_OUTLINES.out.merged_wkt   // channel: [ val(meta), [ wkt ] ]
+    wkt         = MERGEOUTLINES.out.multipoly_wkts   // channel: [ val(meta), [ wkt ] ]
     versions    = ch_versions                     // channel: [ versions.yml ]
 }
