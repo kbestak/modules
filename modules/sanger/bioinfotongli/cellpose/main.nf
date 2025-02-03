@@ -18,9 +18,9 @@ process BIOINFOTONGLI_CELLPOSE {
     tuple val(meta), val(x_min), val(y_min), val(x_max), val(y_max), path(image), val(cell_diameter)
 
     output:
-    tuple val(meta), val(cell_diameter), path("${stem}/${stem}_cp_outlines.txt"), emit: outlines, optional: true
-    tuple val(meta), val(cell_diameter), path("${stem}/${stem}_cp_outlines.wkt"), emit: wkts
-    tuple val(meta), val(cell_diameter), path("${stem}/${stem}*png"), emit: cp_plots, optional: true
+    tuple val(meta), path("${stem}/${stem}_cp_outlines.txt"), emit: outlines, optional: true
+    tuple val(meta), path("${stem}/${stem}_cp_outlines.wkt"), emit: wkts
+    tuple val(meta), path("${stem}/${stem}*png"), emit: cp_plots, optional: true
     path "versions.yml"           , emit: versions
 
     script:
