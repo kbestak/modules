@@ -16,8 +16,9 @@ nextflow_workflow {
                 """
                 input[0] = [
                     [ id:'test'], // meta map
-                    file(params.modules_testdata_base_path + 'imaging/tiff/mindagap.mouse_heart.wga.tif', checkIfExists: true),
+                    file(params.modules_testdata_base_path + 'imaging/segmentation/nuclear_image.tif', checkIfExists: true),
                 ]
+                input[1] = 'CELLPOSE'
                 """
             }
         }
@@ -40,8 +41,9 @@ nextflow_workflow {
                 """
                 input[0] = [
                     [ id:'test'], // meta map
-                    file(params.modules_testdata_base_path + 'imaging/tiff/mindagap.mouse_heart.wga.tif', checkIfExists: true),
+                    file(params.modules_testdata_base_path + 'imaging/segmentation/nuclear_image.tif', checkIfExists: true),
                 ]
+                input[1] = 'CELLPOSE'
                 """
             }
         }
