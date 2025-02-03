@@ -19,7 +19,7 @@ nextflow_process {
                 
                 input[0] = [
                     [ id:'test' ], // meta map
-                    0, 500, 0, 500, // x_min, x_max, y_min, y_max
+                    0,  0, 500, 500, // x_min, x_max, y_min, y_max
                     file(params.modules_testdata_base_path + 'imaging/segmentation/nuclear_image.tif', checkIfExists: true),
                 ]
                 """
@@ -44,7 +44,7 @@ nextflow_process {
                 """
                 input[0] = [
                     [ id:'test' ], // meta map
-                    0, 500, 0, 500, // x_min, x_max, y_min, y_max
+                    0,  0, 500, 500, // x_min, x_max, y_min, y_max
                     file(params.modules_testdata_base_path + 'imaging/segmentation/nuclear_image.tif', checkIfExists: true),
                 ]
                 """
