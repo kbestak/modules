@@ -9,7 +9,7 @@ nextflow_workflow {
     tag "subworkflows_sanger"
     tag "subworkflows/tiled_segmentation"
 
-    test("mouse_heart - tif") {
+    test("nuclear - tif") {
 
         when {
             workflow {
@@ -32,7 +32,7 @@ nextflow_workflow {
 
     }
 
-    test("mouse_heart - tif - stub") {
+    test("nuclear - tif - stub") {
 
         options "-stub"
 
