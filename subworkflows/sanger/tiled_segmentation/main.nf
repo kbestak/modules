@@ -1,4 +1,5 @@
 include { BIOINFOTONGLI_CELLPOSE as CELLPOSE } from '../../../modules/sanger/bioinfotongli/cellpose/main'
+include { BIOINFOTONGLI_STARDIST as STARDIST} from '../../..//modules/sanger/bioinfotongli/stardist/main'
 include { BIOINFOTONGLI_GENERATETILES as GENERATE_TILE_COORDS } from '../../../modules/sanger/bioinfotongli/generatetiles/main'
 
 
@@ -57,7 +58,7 @@ workflow TILED_SEGMENTATION {
         wkts = CELLPOSE.out.wkts.groupTuple(by:[0,1])
         ch_versions = ch_versions.mix(CELLPOSE.out.versions.first())
     } else if (method == "STARDIST") {
-        STARDIST(images_tiles)
+        STARDIST(images_tiles.combine(images, by:0))
         wkts = STARDIST.out.wkts.groupTuple(by:[0,1])
         ch_versions = ch_versions.mix(STARDIST.out.versions.first())
     } else {
