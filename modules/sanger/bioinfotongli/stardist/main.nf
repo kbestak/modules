@@ -11,7 +11,7 @@ process BIOINFOTONGLI_STARDIST {
     tuple val(meta), val(x_min), val(x_max), val(y_min), val(y_max), path(image)
 
     output:
-    tuple val(meta), path("*.wkt"), emit: outlines
+    tuple val(meta), path("*.wkt"), emit: wkts 
     path "versions.yml"           , emit: versions
 
     when:
