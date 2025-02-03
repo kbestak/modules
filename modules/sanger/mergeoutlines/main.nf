@@ -10,7 +10,8 @@ process MERGEOUTLINES {
     tuple val(meta), path(outlines)
 
     output:
-    tuple val(meta), path("${prefix}.wkt"), emit: multipoly_wkts
+    tuple val(meta), path("${prefix}_merged.wkt"), emit: multipoly_wkts
+    tuple val(meta), path("${prefix}_merged.geojson"), emit: multipoly_geojsons, optional: true
     path "versions.yml"           , emit: versions
 
     when:
@@ -18,12 +19,12 @@ process MERGEOUTLINES {
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    prefix = task.ext.prefix ?: "${meta.id}"
     """
     merge_wkts.py run \\
-        -o ${prefix}.wkt \\
-        -T $prefix \\
-        $args
+        --sample_id ${prefix} \\
+        $args \\
+        $outlines
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -33,9 +34,9 @@ process MERGEOUTLINES {
 
     stub:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    prefix = task.ext.prefix ?: "${meta.id}"
     """
-    touch ${prefix}.wkt
+    touch ${prefix}_merged.wkt
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

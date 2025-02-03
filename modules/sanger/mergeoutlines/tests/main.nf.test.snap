@@ -1,0 +1,90 @@
+{
+    "iss - wkt - stub": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_merged.wkt:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "1": [
+                    
+                ],
+                "2": [
+                    "versions.yml:md5,ba98960bc9c13e98dd1a7e96af12ae44"
+                ],
+                "multipoly_geojsons": [
+                    
+                ],
+                "multipoly_wkts": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_merged.wkt:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,ba98960bc9c13e98dd1a7e96af12ae44"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.04.4"
+        },
+        "timestamp": "2025-02-03T22:02:44.495648048"
+    },
+    "iss - wkt": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_merged.wkt:md5,2cf0d31764299be189e26245ae8b034c"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_merged.geojson:md5,aecc6e0e35dd003df7a777256b42a1aa"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,ba98960bc9c13e98dd1a7e96af12ae44"
+                ],
+                "multipoly_geojsons": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_merged.geojson:md5,aecc6e0e35dd003df7a777256b42a1aa"
+                    ]
+                ],
+                "multipoly_wkts": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_merged.wkt:md5,2cf0d31764299be189e26245ae8b034c"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,ba98960bc9c13e98dd1a7e96af12ae44"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.04.4"
+        },
+        "timestamp": "2025-02-03T22:02:32.901015506"
+    }
+}
