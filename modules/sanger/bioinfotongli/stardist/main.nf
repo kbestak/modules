@@ -11,7 +11,7 @@ process BIOINFOTONGLI_STARDIST {
     tuple val(meta), val(x_min),val(y_min),  val(x_max), val(y_max), path(image)
 
     output:
-    tuple val(meta), path("*.wkt"), emit: wkts 
+    tuple val(meta), path("${prefix}_sd_outlines.wkt"), emit: wkts 
     path "versions.yml"           , emit: versions
 
     when:
@@ -19,7 +19,7 @@ process BIOINFOTONGLI_STARDIST {
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    prefix = task.ext.prefix ?: "${meta.id}"
     """
     stardist_helper.py run \\
         --image-path $image \\
@@ -27,7 +27,7 @@ process BIOINFOTONGLI_STARDIST {
         --x_max $x_max \\
         --y_min $y_min \\
         --y_max $y_max \\
-        --output ${prefix}.wkt \\
+        --prefix ${prefix} \\
         $args
 
     cat <<-END_VERSIONS > versions.yml
@@ -38,9 +38,9 @@ process BIOINFOTONGLI_STARDIST {
 
     stub:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    prefix = task.ext.prefix ?: "${meta.id}"
     """
-    touch ${prefix}.wkt
+    touch ${prefix}_sd_outlines.wkt
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

@@ -57,8 +57,7 @@ def segment(
     x_min:int, x_max:int, y_min:int, y_max:int,
     resolution_level: str = 0,
     model_name: str = '2D_versatile_fluo',
-    output:str = "./",
-    image_id: str = None,
+    prefix: str = None,
     DAPI_index:int = 0,
     **kwargs
 ):
@@ -84,8 +83,6 @@ def segment(
     logging.info(f"Loading StarDist2D model '{model_name}'")
     model = StarDist2D.from_pretrained(model_name)
     
-    seg_dir = os.path.join(output, "segmentation")
-
     logging.info(f"Loading full image")
 
     # mi, ma = np.percentile(crop[::8], [1,99.8])                      # compute percentiles from low-resolution image
@@ -100,15 +97,13 @@ def segment(
     logging.info(f"Converting outlines to WKT format")
     wkt = []
     if coord.shape[0] != 0:    
-        os.makedirs(seg_dir, exist_ok=True)
         for polygon in coord:
            flat_coords = [(xy[1], xy[0]) for xy in polygon.reshape(-1, 2)]
            wkt.append(
                 "POLYGON ((" + ", ".join(f"{x} {y}" for x, y in flat_coords + [flat_coords[0]]) + "))"
             )
 
-        wkt_filename = os.path.join(seg_dir, f"{image_id}_sd_outlines.wkt")
-        with open(wkt_filename, "wt") as f:
+        with open(f"{prefix}_sd_outlines.wkt", "wt") as f:
             f.write("\n".join(wkt))
 
 if __name__ == "__main__":
