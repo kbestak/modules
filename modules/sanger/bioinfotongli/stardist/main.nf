@@ -8,7 +8,7 @@ process BIOINFOTONGLI_STARDIST {
         'quay.io/cellgeni/tiled_stardist:0.9.1' }"
 
     input:
-    tuple val(meta), val(x_min), val(x_max), val(y_min), val(y_max), path(image)
+    tuple val(meta), val(x_min),val(y_min),  val(x_max), val(y_max), path(image)
 
     output:
     tuple val(meta), path("*.wkt"), emit: wkts 
