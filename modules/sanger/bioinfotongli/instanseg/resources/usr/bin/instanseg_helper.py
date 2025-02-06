@@ -15,8 +15,23 @@ from shapely.geometry import Polygon, MultiPolygon
 from shapely import to_wkt
 
 import logging
-
 logger = logging.getLogger(__name__)
+
+
+def get_largest_polygon(multi_polygon: MultiPolygon):
+    # Initialize variables to store the largest polygon and its area
+    largest_polygon = None
+    largest_area = 0
+
+    # Iterate through each polygon in the MultiPolygon
+    for polygon in multi_polygon.geoms:
+        # Calculate the area of the current polygon
+        area = polygon.area
+        # Update the largest polygon if the current one is larger
+        if area > largest_area:
+            largest_area = area
+        largest_polygon = polygon
+    return largest_polygon
 
 
 def get_shapely(label):
@@ -44,8 +59,8 @@ def get_shapely(label):
         ]
         multipoly_obj = MultiPolygon(current_polygons)
         polygons[cur_cell_label] = multipoly_obj
-        simpler_polys[cur_cell_label] = multipoly_obj.simplify(
-            2, preserve_topology=True
+        simpler_polys[cur_cell_label] = get_largest_polygon(multipoly_obj).simplify(
+            1, preserve_topology=True
         )
     return polygons, simpler_polys
 
@@ -71,9 +86,9 @@ def main(
         resolve_cell_and_nucleus=False, cleanup_fragments = True
     )
     polys = get_shapely(np.squeeze(np.array(labeled_output)).astype(np.uint16))
-
+    # print(MultiPolygon(list(polys[1].values())))
     with open(output, "wt") as f:
-        f.write(to_wkt(MultiPolygon(polys[1].values())))
+        f.write(to_wkt(MultiPolygon(list(polys[1].values()))))
     
 
 if __name__ == "__main__":
