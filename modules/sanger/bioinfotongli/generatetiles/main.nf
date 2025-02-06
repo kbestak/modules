@@ -1,13 +1,9 @@
 process BIOINFOTONGLI_GENERATETILES {
     tag "${meta.id}"
 
-    label "small_mem"
-
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         "quay.io/bioinfotongli/large_image_io:0.0.2":
         "quay.io/bioinfotongli/large_image_io:0.0.2"}"
-
-    publishDir params.out_dir + "/tile_coords"
 
     input:
     tuple val(meta), path(image)
@@ -30,6 +26,21 @@ process BIOINFOTONGLI_GENERATETILES {
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         : \$(echo \$(tile_2D_image.py version))
+    END_VERSIONS
+    """
+
+    stub:
+    stem = meta.id
+    out_name = "tile_coords.csv"
+    def args = task.ext.args ?: ''
+    prefix = task.ext.prefix ?: "${meta.id}"
+    """
+    mkdir "${stem}"
+    touch "${stem}/${out_name}"
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        bioinfotongli: \$(tile_2D_image.py version)
     END_VERSIONS
     """
 }
