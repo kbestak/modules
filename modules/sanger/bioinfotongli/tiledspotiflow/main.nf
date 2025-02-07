@@ -9,23 +9,22 @@ process BIOINFOTONGLI_TILEDSPOTIFLOW {
     tuple val(meta), val(x_min), val(y_min), val(x_max), val(y_max), path(image), val(ch_ind)
     
     output:
-    tuple val(meta), val(ch_ind), path("${out_dir}/${out_name}"), emit: peaks
+    tuple val(meta), path("${output_name}"), emit: peaks
     path "versions.yml"           , emit: versions
 
     script:
     def args = task.ext.args ?: ''
-    out_dir = "${meta.id}_ch_${ch_ind}"
-    out_name = "ch_${ch_ind}_peaks_Y${y_min}_X${x_min}.csv"
+    meta['ch_ind'] = ch_ind
+    output_name = "${meta.id}_ch_${ch_ind}_peaks_Y${y_min}_X${x_min}.csv"
     """
     Spotiflow_call_peaks.py run \
         -image_path ${image} \
-        -out_dir "${out_dir}" \
         -x_min ${x_min} \
         -y_min ${y_min} \
         -x_max ${x_max} \
         -y_max ${y_max} \
-        -ch_ind ${ch_ind} \
-        -out_name "${out_name}" \
+        -C ${ch_ind} \
+        -output_name "${output_name}" \
         ${args}
     
     cat <<-END_VERSIONS > versions.yml
@@ -36,11 +35,9 @@ process BIOINFOTONGLI_TILEDSPOTIFLOW {
 
     stub:
     def args = task.ext.args ?: ''
-    out_dir = "${meta.id}_ch_${ch_ind}"
-    out_name = "ch_${ch_ind}_peaks_Y${y_min}_X${x_min}.csv"
+    output_name = "${meta.id}_ch_${ch_ind}_peaks_Y${y_min}_X${x_min}.csv"
     """
-    mkdir "${out_dir}"
-    touch "${out_dir}/${out_name}"
+    touch "${output_name}"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
