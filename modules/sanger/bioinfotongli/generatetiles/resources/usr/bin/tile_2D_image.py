@@ -6,12 +6,7 @@ This script will slice the image in XY dimension and save the slices coordinates
 """
 import fire
 from aicsimageio import AICSImage
-# import json
 import csv
-import os
-
-
-VERSION="0.0.1"
 
 
 def calculate_slices(image_size, chunk_size, overlap):
@@ -40,14 +35,20 @@ Deprecating this function as it will duplicate the data and not used in the main
 #     return arr
 
 
-def main(image:str, out_dir:str, overlap:int=30, chunk_size:int=4096, out_name:str="tile_coords.csv"):
+def main(
+        image:str,
+        output_name:str,
+        overlap:int=30,
+        chunk_size:int=4096,
+        C:int=0,
+        S:int=0,
+        T:int=0
+    ):
     img = AICSImage(image)
-    lazy_one_plane = img.get_image_dask_data("XY")
+    lazy_one_plane = img.get_image_dask_data("XY", S=S, T=T, C=C)
     slices = calculate_slices(lazy_one_plane.shape, chunk_size, overlap)
-    os.mkdir(out_dir)
     # Create a CSV file to write the slices
-    csv_file = f"{out_dir}/{out_name}"
-    with open(csv_file, "w", newline="") as f:
+    with open(output_name, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["Tile", "X_MIN", "Y_MIN", "X_MAX", "Y_MAX"])  # Write header
 
@@ -60,6 +61,6 @@ def main(image:str, out_dir:str, overlap:int=30, chunk_size:int=4096, out_name:s
 if __name__ == "__main__":
     options = {
         "run": main,
-        "version": VERSION,
+        "version": "0.0.1",
     }
     fire.Fire(options)

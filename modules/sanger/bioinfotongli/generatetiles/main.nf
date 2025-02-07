@@ -9,34 +9,32 @@ process BIOINFOTONGLI_GENERATETILES {
     tuple val(meta), path(image)
 
     output:
-    tuple val(meta), path("${stem}/${out_name}"), emit: tile_coords
+    tuple val(meta), path("${output_name}"), emit: tile_coords
     path "versions.yml"           , emit: versions
 
     script:
     stem = meta.id
-    out_name = "tile_coords.csv"
-    def args = task.ext.args ?: ''  
+    def args = task.ext.args ?: ''
+    def prefix = task.ext.prefix ?: "${meta.id}"
+    output_name = "${prefix}_tile_coords.csv"
     """
     tile_2D_image.py run \\
         --image ${image} \\
-        --out_dir "${stem}" \\
-        --out_name "${out_name}" \\
+        --output_name "${output_name}" \\
         ${args}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        : \$(echo \$(tile_2D_image.py version))
+        bioinfotongli: \$(tile_2D_image.py version)
     END_VERSIONS
     """
 
     stub:
-    stem = meta.id
-    out_name = "tile_coords.csv"
     def args = task.ext.args ?: ''
-    prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}"
+    output_name = "${prefix}_tile_coords.csv"
     """
-    mkdir "${stem}"
-    touch "${stem}/${out_name}"
+    touch "${output_name}"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
