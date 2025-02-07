@@ -9,14 +9,17 @@ nextflow_process {
     tag "modules_sanger"
     tag "mergeoutlines"
 
-    test("iss - wkt") {
+    test("mouse heart - wkt") {
 
         when {
             process {
                 """
                 input[0] = [
                     [ id:'test'], // meta map
-                    file("/lustre/scratch126/cellgen/cellgeni/tl10/modules/modules/sanger/mergeoutlines/tests/XETG00055__0003753__Hob23-BRA-3_frontal__20230710__174614-24396_44726_28492_48822-diam_40_cp_outlines.wkt", checkIfExists: true)
+                    [
+                        file(params.modules_testdata_base_path + 'test-0_0_200_200-diam_20_cp_outlines.wkt', checkIfExists: true),
+                        file(params.modules_testdata_base_path + 'test-0_0_500_500-diam_20_cp_outlines.wkt', checkIfExists: true),
+                    ]
                 ]
                 """
             }
@@ -31,7 +34,7 @@ nextflow_process {
 
     }
 
-    test("iss - wkt - stub") {
+    test("mouse heart - wkt - stub") {
 
         options "-stub"
 
@@ -40,7 +43,10 @@ nextflow_process {
                 """
                 input[0] = [
                     [ id:'test'], // meta map
-                    file("/lustre/scratch126/cellgen/cellgeni/tl10/modules/modules/sanger/mergeoutlines/tests/XETG00055__0003753__Hob23-BRA-3_frontal__20230710__174614-24396_44726_28492_48822-diam_40_cp_outlines.wkt", checkIfExists: true)
+                    [
+                        file(params.modules_testdata_base_path + 'test-0_0_200_200-diam_20_cp_outlines.wkt', checkIfExists: true),
+                        file(params.modules_testdata_base_path + 'test-0_0_500_500-diam_20_cp_outlines.wkt', checkIfExists: true),
+                    ]
                 ]
                 """
             }
