@@ -18,17 +18,17 @@ workflow TILED_SEGMENTATION {
     images_tiles = GENERATE_TILE_COORDS.out.tile_coords.splitCsv(header:true, sep:",").map{ meta, coords ->
         [meta, coords.X_MIN, coords.Y_MIN, coords.X_MAX, coords.Y_MAX]
     }
-
+    tiles_and_images = images_tiles.combine(images, by:0)
     if (method == "CELLPOSE") {
-        CELLPOSE(images_tiles.combine(images, by:0).combine(channel.from(params.cell_diameters)))
+        CELLPOSE(tiles_and_images.combine(channel.from(params.cell_diameters)))
         wkts = CELLPOSE.out.wkts.groupTuple(by:[0,1])
         ch_versions = ch_versions.mix(CELLPOSE.out.versions.first())
     } else if (method == "STARDIST") {
-        STARDIST(images_tiles.combine(images, by:0))
+        STARDIST(tiles_and_images)
         wkts = STARDIST.out.wkts.groupTuple(by:[0,1])
         ch_versions = ch_versions.mix(STARDIST.out.versions.first())
     } else if (method == "INSTANSEG") {
-        INSTANSEG(images_tiles.combine(images, by:0))
+        INSTANSEG(tiles_and_images)
         wkts = INSTANSEG.out.wkts.groupTuple(by:[0,1])
         ch_versions = ch_versions.mix(INSTANSEG.out.versions.first())
     } else {
