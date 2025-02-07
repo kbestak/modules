@@ -1,6 +1,7 @@
 include { BIOINFOTONGLI_CELLPOSE as CELLPOSE } from '../../../modules/sanger/bioinfotongli/cellpose/main'
 include { BIOINFOTONGLI_STARDIST as STARDIST} from '../../../modules/sanger/bioinfotongli/stardist/main'
 include { BIOINFOTONGLI_INSTANSEG as INSTANSEG} from '../../../modules/sanger/bioinfotongli/instanseg/main'
+include { BIOINFOTONGLI_DEEPCELL as DEEPCELL} from '../../../modules/sanger/bioinfotongli/deepcell/main'
 include { MERGEOUTLINES} from '../../../modules/sanger/mergeoutlines/main'
 include { BIOINFOTONGLI_GENERATETILES as GENERATE_TILE_COORDS } from '../../../modules/sanger/bioinfotongli/generatetiles/main'
 
@@ -31,6 +32,10 @@ workflow TILED_SEGMENTATION {
         INSTANSEG(tiles_and_images)
         wkts = INSTANSEG.out.wkts.groupTuple(by:[0,1])
         ch_versions = ch_versions.mix(INSTANSEG.out.versions.first())
+    } else if (method == "DEEPCELL") {
+        DEEPCELL(tiles_and_images)
+        wkts = DEEPCELL.out.wkts.groupTuple(by:[0,1])
+        ch_versions = ch_versions.mix(DEEPCELL.out.versions.first())
     } else {
         error "Invalid segmentation method: ${method}"
     }
