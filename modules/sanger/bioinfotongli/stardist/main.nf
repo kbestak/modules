@@ -1,5 +1,6 @@
 process BIOINFOTONGLI_STARDIST {
     tag "$meta.id"
+    label "gpu"
     label 'process_medium'
 
     // conda "${moduleDir}/environment.yml"
