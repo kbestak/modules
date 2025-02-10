@@ -20,7 +20,7 @@ process BIOINFOTONGLI_DEEPCELL {
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}_${x_min}_${y_min}_${x_max}_${y_max}"
     output_name = "${prefix}_deepcell_outlines.wkt"
     """
     deepcell_helper.py run \\
@@ -40,7 +40,7 @@ process BIOINFOTONGLI_DEEPCELL {
 
     stub:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}_${x_min}_${y_min}_${x_max}_${y_max}"
     output_name = "${prefix}_deepcell_outlines.wkt"
     """
     touch ${output_name}
