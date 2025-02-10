@@ -33,7 +33,7 @@ process BIOINFOTONGLI_STARDIST {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(stardist_helper.py --version)
+        bioinfotongli: \$(stardist_helper.py version)
     END_VERSIONS
     """
 
@@ -45,7 +45,7 @@ process BIOINFOTONGLI_STARDIST {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(stardist_helper.py --version)
+        bioinfotongli: \$(stardist_helper.py version)
     END_VERSIONS
     """
 }
