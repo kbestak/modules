@@ -57,7 +57,7 @@ def segment(
     x_min:int, x_max:int, y_min:int, y_max:int,
     resolution_level: str = 0,
     model_name: str = '2D_versatile_fluo',
-    prefix: str = None,
+    output_name: str = None,
     DAPI_index:int = 0,
     **kwargs
 ):
@@ -103,8 +103,12 @@ def segment(
                 "POLYGON ((" + ", ".join(f"{x} {y}" for x, y in flat_coords + [flat_coords[0]]) + "))"
             )
 
-        with open(f"{prefix}_sd_outlines.wkt", "wt") as f:
+        with open(output_name, "wt") as f:
             f.write("\n".join(wkt))
+    else:
+        logging.info("No outlines file found")
+        with open(output_name, "wt") as f:
+            f.write("")
 
 if __name__ == "__main__":
     options = {
