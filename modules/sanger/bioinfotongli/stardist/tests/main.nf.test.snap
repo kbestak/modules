@@ -7,21 +7,21 @@
                         {
                             "id": "test"
                         },
-                        "test_sd_outlines.wkt:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "test_0_0_500_500_sd_outlines.wkt:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "1": [
-                    "versions.yml:md5,5e23551522974c6729614a2acbed303a"
+                    "versions.yml:md5,badd5e6abbb4e33c6ee6bd75bc8612c8"
                 ],
                 "versions": [
-                    "versions.yml:md5,5e23551522974c6729614a2acbed303a"
+                    "versions.yml:md5,badd5e6abbb4e33c6ee6bd75bc8612c8"
                 ],
                 "wkts": [
                     [
                         {
                             "id": "test"
                         },
-                        "test_sd_outlines.wkt:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "test_0_0_500_500_sd_outlines.wkt:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ]
             }
@@ -30,7 +30,7 @@
             "nf-test": "0.9.2",
             "nextflow": "24.04.4"
         },
-        "timestamp": "2025-02-03T23:45:32.201656039"
+        "timestamp": "2025-02-11T09:43:53.533814895"
     },
     "stardist - tif": {
         "content": [
@@ -40,21 +40,21 @@
                         {
                             "id": "test"
                         },
-                        "test_sd_outlines.wkt:md5,bb69c9f9a25a1ea5cbab1c658e6278e8"
+                        "test_0_0_500_500_sd_outlines.wkt:md5,bb69c9f9a25a1ea5cbab1c658e6278e8"
                     ]
                 ],
                 "1": [
-                    "versions.yml:md5,5e23551522974c6729614a2acbed303a"
+                    "versions.yml:md5,badd5e6abbb4e33c6ee6bd75bc8612c8"
                 ],
                 "versions": [
-                    "versions.yml:md5,5e23551522974c6729614a2acbed303a"
+                    "versions.yml:md5,badd5e6abbb4e33c6ee6bd75bc8612c8"
                 ],
                 "wkts": [
                     [
                         {
                             "id": "test"
                         },
-                        "test_sd_outlines.wkt:md5,bb69c9f9a25a1ea5cbab1c658e6278e8"
+                        "test_0_0_500_500_sd_outlines.wkt:md5,bb69c9f9a25a1ea5cbab1c658e6278e8"
                     ]
                 ]
             }
@@ -63,6 +63,6 @@
             "nf-test": "0.9.2",
             "nextflow": "24.04.4"
         },
-        "timestamp": "2025-02-03T23:45:21.319098766"
+        "timestamp": "2025-02-11T09:43:21.088659066"
     }
 }
