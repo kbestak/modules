@@ -67,7 +67,7 @@ def get_largest_polygon(multi_polygon: MultiPolygon):
         # Calculate the area of the current polygon
         area = polygon.area
         # Update the largest polygon if the current one is larger
-        if area > largest_area:
+        if area >= largest_area:
             largest_area = area
         largest_polygon = polygon
     return largest_polygon
