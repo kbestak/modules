@@ -7,7 +7,7 @@
                         {
                             "id": "mouse_heart"
                         },
-                        "mouse_heart_deepcell_outlines.wkt:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "mouse_heart_0_0_200_200_deepcell_outlines.wkt:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "1": [
@@ -21,7 +21,7 @@
                         {
                             "id": "mouse_heart"
                         },
-                        "mouse_heart_deepcell_outlines.wkt:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "mouse_heart_0_0_200_200_deepcell_outlines.wkt:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ]
             }
@@ -30,7 +30,7 @@
             "nf-test": "0.9.2",
             "nextflow": "24.04.4"
         },
-        "timestamp": "2025-02-07T21:26:00.128570064"
+        "timestamp": "2025-02-11T09:33:39.654173115"
     },
     "mouse_heart - tiff": {
         "content": [
@@ -40,7 +40,7 @@
                         {
                             "id": "mouse_heart"
                         },
-                        "mouse_heart_deepcell_outlines.wkt:md5,53d08480bbef4b8349ba70ebef3fc5dc"
+                        "mouse_heart_0_0_600_600_deepcell_outlines.wkt:md5,53d08480bbef4b8349ba70ebef3fc5dc"
                     ]
                 ],
                 "1": [
@@ -54,7 +54,7 @@
                         {
                             "id": "mouse_heart"
                         },
-                        "mouse_heart_deepcell_outlines.wkt:md5,53d08480bbef4b8349ba70ebef3fc5dc"
+                        "mouse_heart_0_0_600_600_deepcell_outlines.wkt:md5,53d08480bbef4b8349ba70ebef3fc5dc"
                     ]
                 ]
             }
@@ -63,6 +63,6 @@
             "nf-test": "0.9.2",
             "nextflow": "24.04.4"
         },
-        "timestamp": "2025-02-07T21:25:49.303550577"
+        "timestamp": "2025-02-11T09:33:16.099316588"
     }
 }
