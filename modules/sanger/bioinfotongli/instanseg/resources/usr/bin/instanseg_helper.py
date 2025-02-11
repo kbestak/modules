@@ -13,9 +13,43 @@ import cv2
 import numpy as np
 from shapely.geometry import Polygon, MultiPolygon
 from shapely import to_wkt
+import tifffile as tf
+import zarr
 
 import logging
 logger = logging.getLogger(__name__)
+
+def load_tile(
+        image,
+        x_min, x_max, y_min, y_max,
+        Z=[0],
+        C=[0],
+        T=[0],
+        resolution_level=0):
+    """
+    AICSImage doesn't to lazy chunk loading but loads the whole slice first and then crops it.
+    Tifffile can do lazy loading but one may need to play with the axis order, if it's hypterstack.
+    """
+    if image.endswith(".tif") or image.endswith(".tiff"):
+        store = tf.imread(image, aszarr=True)
+        zgroup = zarr.open(store, mode="r")
+        
+        if isinstance(zgroup, zarr.core.Array):
+            image = np.array(zgroup)
+        else:
+            image = zgroup[resolution_level]
+
+        crop = image[y_min:y_max, x_min:y_max]
+    else:
+        # This will load the whole slice first and then crop it. So, large memroy footprint
+        img = AICSImage(image)
+        lazy_one_plane = img.get_image_dask_data(
+            "ZCYX",
+            T=T,
+            C=C,
+            Z=Z)
+        crop = lazy_one_plane[:, :, y_min:y_max, x_min:x_max].compute()
+    return crop
 
 
 def get_largest_polygon(multi_polygon: MultiPolygon):
@@ -68,26 +102,22 @@ def get_shapely(label):
 def main(
         image_path: str,
         x_min: int, x_max: int, y_min: int, y_max: int,
-        output: str,
+        output_name: str,
         model: str = "fluorescence_nuclei_and_cells",
-        channel_index: int = 0,
-        T: int = 0,
+        C: list = [0],
+        T: list = [0],
+        Z: list = [0],
     ):
     instanseg_fluorescence = InstanSeg(model, verbosity=1)
-    img = AICSImage(image_path)
 
-    if T>0:
-        logger.warning("T is not supported yet, only the first frame will be processed")
-
-    crop = img.get_image_dask_data("YX", S=0, T=0, C=channel_index)[y_min:y_max, x_min:x_max]
+    crop = load_tile(image_path, x_min, x_max, y_min, y_max, T=T, C=C, Z=Z)
 
     labeled_output = instanseg_fluorescence.eval_small_image(
         np.array(crop).astype(np.uint16), None, return_image_tensor=False, target="nuclei",
         resolve_cell_and_nucleus=False, cleanup_fragments = True
     )
     polys = get_shapely(np.squeeze(np.array(labeled_output)).astype(np.uint16))
-    # print(MultiPolygon(list(polys[1].values())))
-    with open(output, "wt") as f:
+    with open(output_name, "wt") as f:
         f.write(to_wkt(MultiPolygon(list(polys[1].values()))))
     
 

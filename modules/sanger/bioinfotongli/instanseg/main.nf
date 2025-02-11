@@ -12,7 +12,7 @@ process BIOINFOTONGLI_INSTANSEG {
     tuple val(meta), val(x_min), val(y_min), val(x_max), val(y_max), path(img)
 
     output:
-    tuple val(meta), path("${prefix}.wkt"), emit: wkts
+    tuple val(meta), path("${output_name}"), emit: wkts
     path "versions.yml"           , emit: versions
 
     when:
@@ -20,7 +20,8 @@ process BIOINFOTONGLI_INSTANSEG {
 
     script:
     def args = task.ext.args ?: ''
-    prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}_${x_min}_${y_min}_${x_max}_${y_max}"
+    output_name = "${prefix}_instanseg_outlines.wkt"
     """
     instanseg_helper.py run \\
         -image-path ${img} \\
@@ -28,7 +29,7 @@ process BIOINFOTONGLI_INSTANSEG {
         -y-min ${y_min} \\
         -x-max ${x_max} \\
         -y-max ${y_max} \\
-        -output ${prefix}.wkt \\
+        -output_name ${output_name} \\
         $args \\
 
     cat <<-END_VERSIONS > versions.yml
@@ -39,9 +40,10 @@ process BIOINFOTONGLI_INSTANSEG {
 
     stub:
     def args = task.ext.args ?: ''
-    prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}_${x_min}_${y_min}_${x_max}_${y_max}"
+    output_name = "${prefix}_instanseg_outlines.wkt"
     """
-    touch ${prefix}.wkt
+    touch ${output_name}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
