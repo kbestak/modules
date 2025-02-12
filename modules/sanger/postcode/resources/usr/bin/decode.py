@@ -123,8 +123,11 @@ def decode(spot_locations_p: str,
         # np.save(f"{stem}_reshaped_spot_profile.npy", spot_profile)
         print(spot_profile.shape, spot_profile[0], type(spot_profile[0]), spot_profile[0].dtype)
 
-
-    codebook_arr, spot_profile, gene_list, K = prepare_iss(codebook_p, spot_profile_p, **prepare_iss_kwargs)
+    if os.path.getsize(readouts_csv) != 0: # MERFISH-like data, this file should be provided
+        spot_profile, N_readouts = average_spot_profiles(spot_profile, readouts_csv) # Average is chosen over max for MERFISH-like profiles
+        gene_list, codebook_arr, K = ReadPrepCodebook_MER(codebook_p, N_readouts)
+    else:
+        codebook_arr, spot_profile, gene_list, K = prepare_iss(codebook_p, spot_profile_p, **prepare_iss_kwargs)
 
     assert spot_locations.shape[0] == spot_profile.shape[0]
     print(spot_profile.shape)
