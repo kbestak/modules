@@ -44,7 +44,7 @@ def load_tile(
         else:
             image = zgroup[resolution_level]
 
-        crop = image[y_min:y_max, x_min:y_max]
+        crop = image[y_min:y_max, x_min:x_max]
     else:
         # This will load the whole slice first and then crop it. So, large memroy footprint
         img = AICSImage(image)
@@ -70,7 +70,10 @@ def get_largest_polygon(multi_polygon: MultiPolygon):
         if area >= largest_area:
             largest_area = area
         largest_polygon = polygon
-    return largest_polygon
+    if largest_polygon is None:
+        return multi_polygon 
+    else:
+        return largest_polygon
 
 
 def get_shapely(label):
