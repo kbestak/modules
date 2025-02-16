@@ -65,7 +65,11 @@ def get_largest_polygon(multi_polygon: MultiPolygon):
         if area > largest_area:
             largest_area = area
         largest_polygon = polygon
-    return largest_polygon
+    if largest_polygon is None:
+        logger.warning("No polygon found")
+        return multi_polygon
+    else:
+        return largest_polygon
 
 
 def get_shapely(label):
