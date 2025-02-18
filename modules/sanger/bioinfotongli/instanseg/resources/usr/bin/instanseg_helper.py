@@ -13,6 +13,7 @@ import cv2
 import numpy as np
 from shapely.geometry import Polygon, MultiPolygon
 from shapely import to_wkt
+from shapely.affinity import translate
 import tifffile as tf
 import zarr
 
@@ -122,7 +123,11 @@ def main(
     )
     polys = get_shapely(np.squeeze(np.array(labeled_output)).astype(np.uint16))
     with open(output_name, "wt") as f:
-        f.write(to_wkt(MultiPolygon(list(polys[1].values()))))
+        f.write(
+            to_wkt(
+                translate(MultiPolygon(list(polys[1].values())), xoff=x_min, yoff=y_min)
+            )
+        )
     
 
 if __name__ == "__main__":
