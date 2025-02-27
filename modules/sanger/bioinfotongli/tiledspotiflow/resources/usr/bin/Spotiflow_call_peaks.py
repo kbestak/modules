@@ -36,6 +36,6 @@ def main(
 if __name__ == "__main__":
     options = {
         "run" : main,
-        "version" : "0.0.1"
+        "version" : "0.1.0"
     }
     fire.Fire(options)
