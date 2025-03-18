@@ -12,6 +12,9 @@ nextflow_workflow {
     test("nuclear - tif - cellpose") {
 
         when {
+            params {
+                cell_diameter = 200
+            }
             workflow {
                 """
                 input[0] = [

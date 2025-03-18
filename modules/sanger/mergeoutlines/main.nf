@@ -18,7 +18,7 @@ process MERGEOUTLINES {
 
     script:
     def args = task.ext.args ?: ''
-    prefix = task.ext.prefix ?: "${meta.id}_merged"
+    def prefix = task.ext.prefix ?: "${meta.id}_merged"
     """
     merge-polygons \\
         --wkts $outlines \\
@@ -36,6 +36,7 @@ process MERGEOUTLINES {
     prefix = task.ext.prefix ?: "${meta.id}_merged"
     """
     touch ${prefix}.wkt
+    touch ${prefix}.geojson
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

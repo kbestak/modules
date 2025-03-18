@@ -3,13 +3,14 @@ process BIOINFOTONGLI_CELLPOSE {
 
     label "medium_mem"
 
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        "quay.io/cellgeni/tiled_cellpose:0.1.3":
-        "quay.io/cellgeni/tiled_cellpose:0.1.3"}"
-    containerOptions = {
-            workflow.containerEngine == "singularity" ? "--cleanenv --nv":
-            ( workflow.containerEngine == "docker" ? "--gpus all": null )
-    }
+    // container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+    //     "quay.io/cellgeni/tiled_cellpose:0.1.3":
+    //     "quay.io/cellgeni/tiled_cellpose:0.1.3"}"
+    container "quay.io/cellgeni/tiled_cellpose:0.1.3"
+    // containerOptions = {
+    //         workflow.containerEngine == "singularity" ? "--cleanenv --nv":
+    //         ( workflow.containerEngine == "docker" ? "--gpus all": null )
+    // }
 
     publishDir params.out_dir + "/naive_cellpose_segmentation"
 
@@ -24,8 +25,9 @@ process BIOINFOTONGLI_CELLPOSE {
 
     script:
     prefix = "${meta.id}-${x_min}_${y_min}_${x_max}_${y_max}-diam_${cell_diameter}"
-    def args = task.ext.args ?: ''  
+    def args = task.ext.args ?: ''
     """
+    export NUMBA_CACHE_DIR=\$PWD
     cellpose_seg.py run \
         --image ${image} \
         --x_min ${x_min} \
@@ -35,7 +37,7 @@ process BIOINFOTONGLI_CELLPOSE {
         --cell_diameter ${cell_diameter} \
         --out_dir "${prefix}" \
         ${args}
-    
+
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         : \$(echo \$(cellpose_seg.py version))
