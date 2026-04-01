@@ -1,0 +1,103 @@
+{
+    "stub_out_dir": {
+        "content": [
+            [
+                "well-rack-roi-exp"
+            ]
+        ],
+        "timestamp": "2026-04-01T19:25:52.36106158",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    },
+    "macsima2mc - input_dir": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        [
+                            [
+                                "markers.csv:md5,cd65bc2851cb11cddde7734f246c246a",
+                                [
+                                    "cycle-001-src-B-rack-01-well-C01-roi-001-exp-1-markers-DAPI__Laminin-filters-DAPI__FITC.ome.tiff:md5,3169cda4fb158ba5b799b281f0cefbca",
+                                    "cycle-001-src-S-rack-01-well-C01-roi-001-exp-1-markers-DAPI__Laminin-filters-DAPI__FITC.ome.tiff:md5,5d5d96bcd58307cacc808e8047623fa5"
+                                ]
+                            ],
+                            [
+                                "markers.csv:md5,0997f38a71588d1c44601720b831b3d6",
+                                [
+                                    "cycle-001-src-B-rack-01-well-C01-roi-001-exp-2-markers-DAPI__Laminin-filters-DAPI__FITC.ome.tiff:md5,3440cdfe157e6301813e6ea629bdea63",
+                                    "cycle-001-src-S-rack-01-well-C01-roi-001-exp-2-markers-DAPI__Laminin-filters-DAPI__FITC.ome.tiff:md5,3440cdfe157e6301813e6ea629bdea63"
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                "1": [
+                    [
+                        "MACSIMA2MC",
+                        "macsima2mc",
+                        "1.2.6"
+                    ]
+                ],
+                "out_dir": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        [
+                            [
+                                "markers.csv:md5,cd65bc2851cb11cddde7734f246c246a",
+                                [
+                                    "cycle-001-src-B-rack-01-well-C01-roi-001-exp-1-markers-DAPI__Laminin-filters-DAPI__FITC.ome.tiff:md5,3169cda4fb158ba5b799b281f0cefbca",
+                                    "cycle-001-src-S-rack-01-well-C01-roi-001-exp-1-markers-DAPI__Laminin-filters-DAPI__FITC.ome.tiff:md5,5d5d96bcd58307cacc808e8047623fa5"
+                                ]
+                            ],
+                            [
+                                "markers.csv:md5,0997f38a71588d1c44601720b831b3d6",
+                                [
+                                    "cycle-001-src-B-rack-01-well-C01-roi-001-exp-2-markers-DAPI__Laminin-filters-DAPI__FITC.ome.tiff:md5,3440cdfe157e6301813e6ea629bdea63",
+                                    "cycle-001-src-S-rack-01-well-C01-roi-001-exp-2-markers-DAPI__Laminin-filters-DAPI__FITC.ome.tiff:md5,3440cdfe157e6301813e6ea629bdea63"
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                "versions_macsima2mc": [
+                    [
+                        "MACSIMA2MC",
+                        "macsima2mc",
+                        "1.2.6"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-04-01T19:25:41.098850594",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    },
+    "stub_versions": {
+        "content": [
+            {
+                "versions_macsima2mc": [
+                    [
+                        "MACSIMA2MC",
+                        "macsima2mc",
+                        "1.2.6"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-04-01T19:25:56.465341618",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    }
+}
