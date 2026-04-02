@@ -1,13 +1,12 @@
 nextflow_process {
 
-    name "Test Process MCSTAGING_MACSIMA2MC"
+    name "Test Process MACSIMA2MC"
     script "../main.nf"
-    process "MCSTAGING_MACSIMA2MC"
+    process "MACSIMA2MC"
 
     tag "modules"
     tag "modules_nfcore"
-    tag "mcstaging"
-    tag "mcstaging/macsima2mc"
+    tag "macsima2mc"
 
     test("macsima2mc - input_dir") {
 
@@ -49,9 +48,11 @@ nextflow_process {
         }
 
     then {
+            def out_path = process.out.out_dir[0][1][0].toString()
+
             assertAll(
-                { assert process.failed },
-                { assert process.errorReport.contains("WARNING: This module has been deprecated.") }
+                { assert process.success },
+                { assert snapshot(process.out).match()}
             )
         }
     }
@@ -99,9 +100,17 @@ nextflow_process {
 
         then {
 
+            def stub_outputs = process.out.out_dir[0][1]
+            if (!(stub_outputs instanceof List)) stub_outputs = [stub_outputs]
+
             assertAll(
-                { assert process.failed },
-                { assert process.errorReport.contains("WARNING: This module has been deprecated.") }
+                { assert process.success },
+                { assert snapshot(
+                    stub_outputs.collect { it.toString().tokenize('/').last() }.sort()
+                ).match("stub_out_dir") },
+                { assert snapshot(
+                    process.out.findAll { key, val -> key.startsWith("versions") }
+                ).match("stub_versions") }
             )
         }
     }

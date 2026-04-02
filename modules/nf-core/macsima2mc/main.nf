@@ -1,8 +1,11 @@
-process MCSTAGING_MACSIMA2MC {
+process MACSIMA2MC {
     tag "$meta.id"
     label 'process_single'
 
+    conda "${moduleDir}/environment.yml"
     container "ghcr.io/schapirolabor/macsima2mc:v1.2.15"
+    // Container version is pinned to v1.2.15 (latest) due to small code-unrelated bumps, but the macsima2mc package inside hasn't changed since v1.2.6
+    // Semantic versioning will continue from 1.3 onward.
 
     input:
     tuple val(meta), path(input_dir), val(output_dir)
@@ -15,29 +18,19 @@ process MCSTAGING_MACSIMA2MC {
     task.ext.when == null || task.ext.when
 
     script:
-    def deprecation_message = """
-WARNING: This module has been deprecated. Please use nf-core/modules/macsima2mc
-
-Reason:
-Renamed module to match the tool/subtool convention
-"""
     def args   = task.ext.args   ?: ''
-    assert false: deprecation_message
     """
-    python /staging/macsima2mc/macsima2mc.py \
+    macsima2mc \
         -i ${input_dir} \
         -o ${output_dir} \
         ${args}
+
+    find ${output_dir} -name "*.ome.tiff" | while read f; do
+        sed -i -E 's/UUID="urn:uuid:[[:xdigit:]]{8}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{12}"/                                                    /g' "\$f"
+    done
     """
 
     stub:
-    def deprecation_message = """
-WARNING: This module has been deprecated. Please use nf-core/modules/macsima2mc
-
-Reason:
-Renamed module to match the tool/subtool convention
-"""
-    assert false: deprecation_message
     """
     mkdir ${output_dir}
     mkdir ${output_dir}/well-rack-roi-exp
