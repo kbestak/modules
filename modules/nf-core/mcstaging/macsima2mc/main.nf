@@ -15,13 +15,19 @@ process MCSTAGING_MACSIMA2MC {
     task.ext.when == null || task.ext.when
 
     script:
+    def deprecation_message = """
+WARNING: This module has been deprecated. Please use nf-core/modules/macsima2mc
+
+Reason:
+Renamed module to match the tool/subtool convention
+"""
     // Exit if running this module with -profile conda / -profile mamba
     if (workflow.profile.tokenize(',').intersect(['conda', 'mamba']).size() >= 1) {
         error "macsima2mc module in conda does not exist. Please use Docker / Singularity / Podman instead."
     }
 
     def args   = task.ext.args   ?: ''
-
+    assert false: deprecation_message
     """
     python /staging/macsima2mc/macsima2mc.py \
         -i ${input_dir} \
@@ -30,11 +36,17 @@ process MCSTAGING_MACSIMA2MC {
     """
 
     stub:
+    def deprecation_message = """
+WARNING: This module has been deprecated. Please use nf-core/modules/macsima2mc
+
+Reason:
+Renamed module to match the tool/subtool convention
+"""
     // Exit if running this module with -profile conda / -profile mamba
     if (workflow.profile.tokenize(',').intersect(['conda', 'mamba']).size() >= 1) {
         error "macsima2mc module in conda does not exist. Please use Docker / Singularity / Podman instead."
     }
-
+    assert false: deprecation_message
     """
     mkdir ${output_dir}
     mkdir ${output_dir}/well-rack-roi-exp

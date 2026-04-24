@@ -49,18 +49,9 @@ nextflow_process {
         }
 
     then {
-            def out_path = process.out.out_dir[0][1][0].toString()
-
             assertAll(
-                { assert process.success },
-                { assert process.out.out_dir[0][1].size() >= 1 },
-                { assert new File(out_path).isDirectory() },
-                { assert new File(out_path + '/markers.csv').exists() },
-                { assert new File(out_path + '/raw').isDirectory() },
-                { assert snapshot(
-                    process.out.findAll { key, val -> key.startsWith("versions") },
-                    file(out_path + '/markers.csv').name
-                ).match() }
+                { assert process.failed },
+                { assert process.errorReport.contains("WARNING: This module has been deprecated.")}
             )
         }
     }
@@ -108,17 +99,9 @@ nextflow_process {
 
         then {
 
-            def stub_outputs = process.out.out_dir[0][1]
-            if (!(stub_outputs instanceof List)) stub_outputs = [stub_outputs]
-
             assertAll(
-                { assert process.success },
-                { assert snapshot(
-                    stub_outputs.collect { it.toString().tokenize('/').last() }.sort()
-                ).match("stub_out_dir") },
-                { assert snapshot(
-                    process.out.findAll { key, val -> key.startsWith("versions") }
-                ).match("stub_versions") }
+                { assert process.failed },
+                { assert process.errorReport.contains("WARNING: This module has been deprecated.")}
             )
         }
     }
