@@ -1,0 +1,124 @@
+{
+    "stub_out_dir": {
+        "content": [
+            [
+                "well-rack-roi-exp"
+            ]
+        ],
+        "timestamp": "2026-04-24T16:49:31.464248584",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    },
+    "macsima2mc - input_dir": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        [
+                            [
+                                "markers.csv:md5,7fe8def5d1313df2a58cd2fc28e771c5",
+                                [
+                                    "cycle-001-src-B-rack-01-well-C01-roi-001-exp-1-markers-DAPI__Laminin-filters-DAPI__FITC.ome.tiff:md5,218432f8f7e9ca1c5ae7359324ca2eb3",
+                                    "cycle-001-src-S-rack-01-well-C01-roi-001-exp-1-markers-DAPI__Laminin-filters-DAPI__FITC.ome.tiff:md5,af5adf1989010664299e8231f1ce5690"
+                                ]
+                            ],
+                            [
+                                "markers.csv:md5,0997f38a71588d1c44601720b831b3d6",
+                                [
+                                    "cycle-001-src-B-rack-01-well-C01-roi-001-exp-2-markers-DAPI__Laminin-filters-DAPI__FITC.ome.tiff:md5,36db59c6865f4568e1a2aba90b90592b",
+                                    "cycle-001-src-S-rack-01-well-C01-roi-001-exp-2-markers-DAPI__Laminin-filters-DAPI__FITC.ome.tiff:md5,36db59c6865f4568e1a2aba90b90592b"
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                "1": [
+                    [
+                        "MACSIMA2MC",
+                        "macsima2mc",
+                        "1.3.0"
+                    ]
+                ],
+                "2": [
+                    [
+                        "MACSIMA2MC",
+                        "basicpy",
+                        "2.0.0"
+                    ]
+                ],
+                "out_dir": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        [
+                            [
+                                "markers.csv:md5,7fe8def5d1313df2a58cd2fc28e771c5",
+                                [
+                                    "cycle-001-src-B-rack-01-well-C01-roi-001-exp-1-markers-DAPI__Laminin-filters-DAPI__FITC.ome.tiff:md5,218432f8f7e9ca1c5ae7359324ca2eb3",
+                                    "cycle-001-src-S-rack-01-well-C01-roi-001-exp-1-markers-DAPI__Laminin-filters-DAPI__FITC.ome.tiff:md5,af5adf1989010664299e8231f1ce5690"
+                                ]
+                            ],
+                            [
+                                "markers.csv:md5,0997f38a71588d1c44601720b831b3d6",
+                                [
+                                    "cycle-001-src-B-rack-01-well-C01-roi-001-exp-2-markers-DAPI__Laminin-filters-DAPI__FITC.ome.tiff:md5,36db59c6865f4568e1a2aba90b90592b",
+                                    "cycle-001-src-S-rack-01-well-C01-roi-001-exp-2-markers-DAPI__Laminin-filters-DAPI__FITC.ome.tiff:md5,36db59c6865f4568e1a2aba90b90592b"
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                "versions_basicpy": [
+                    [
+                        "MACSIMA2MC",
+                        "basicpy",
+                        "2.0.0"
+                    ]
+                ],
+                "versions_macsima2mc": [
+                    [
+                        "MACSIMA2MC",
+                        "macsima2mc",
+                        "1.3.0"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-04-24T16:55:52.766524267",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    },
+    "stub_versions": {
+        "content": [
+            {
+                "versions_basicpy": [
+                    [
+                        "MACSIMA2MC",
+                        "basicpy",
+                        "2.0.0"
+                    ]
+                ],
+                "versions_macsima2mc": [
+                    [
+                        "MACSIMA2MC",
+                        "macsima2mc",
+                        "1.3.0"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-04-24T16:49:31.47120825",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    }
+}

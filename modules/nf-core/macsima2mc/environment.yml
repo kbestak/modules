@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/environment-schema.json
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - conda-forge::beautifulsoup4=4.14.3
+  - conda-forge::ome-types=0.5.2
+  - conda-forge::tifffile=2026.3.3
+  - numpy=1.26.4
+  - pandas=2.3.3
+  - python=3.12.13
+  - scikit-image=0.26.0
+  - pip=26.0.1
+  - pip:
+      - BaSiCPy==2.0.0
+      - macsima2mc==1.3.0
